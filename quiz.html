@@ -1,0 +1,1108 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>User Preference Quiz</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .question {
+            display: none;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .question.active {
+            display: block;
+        }
+
+        .question h2 {
+            margin-bottom: 30px;
+        }
+
+        .answers {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+       
+
+        .answerBtn {
+            width: 220px;
+            min-height: 250px;
+
+            padding: 15px;
+
+            border: 2px solid #ddd;
+            border-radius: 15px;
+
+            background: white;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.15s,
+                border-color 0.15s,
+                box-shadow 0.15s;
+        }
+
+        .answerBtn:hover {
+            transform: translateY(-5px);
+            border-color: #888;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .answerBtn img {
+            width: 170px;
+            height: 140px;
+
+            object-fit: cover;
+
+            border-radius: 10px;
+
+            display: block;
+            margin: 0 auto 15px;
+        }
+
+        .answerBtn p {
+            margin: 0;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        #result {
+            display: none;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        #result pre {
+            text-align: left;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <h1 id="title">Quick Questions</h1>
+
+
+    <!-- ================================================= -->
+    <!-- Q1 - GENERAL PREFERENCE -->
+    <!-- ================================================= -->
+
+    <div id="q1" class="question active">
+
+        <h2>Where would you rather go?</h2>
+
+        <div class="answers">
+
+            <button class="answerBtn"
+                    data-q="1"
+                    data-value="future">
+
+                <img src="images/future.jpg"
+                     alt="Future city">
+
+                <p>🚀 Future city</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="1"
+                    data-value="mystic">
+
+                <img src="images/mystic.jpg"
+                     alt="Mystical world">
+
+                <p>✨ Mystic world</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="1"
+                    data-value="frontier">
+
+                <img src="images/frontier.jpg"
+                     alt="Unknown frontier">
+
+                <p>🔬 Unknown frontier</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="1"
+                    data-value="creative">
+
+                <img src="images/creative.jpg"
+                     alt="Creative world">
+
+                <p>🎨 Creative world</p>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- Q2 - REASONING -->
+    <!-- ================================================= -->
+
+    <div id="q2" class="question">
+
+        <h2>Odd one out?</h2>
+
+        <div class="answers">
+
+            <button class="answerBtn"
+                    data-q="2"
+                    data-value="triangle">
+
+                <img src="images/triangle.jpg"
+                     alt="Triangle">
+
+                <p>Triangle</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="2"
+                    data-value="circle">
+
+                <img src="images/circle.jpg"
+                     alt="Circle">
+
+                <p>Circle</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="2"
+                    data-value="square">
+
+                <img src="images/square.jpg"
+                     alt="Square">
+
+                <p>Square</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="2"
+                    data-value="dog">
+
+                <img src="images/dog.jpg"
+                     alt="Dog">
+
+                <p>Dog</p>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- Q3 - PATTERN -->
+    <!-- ================================================= -->
+
+    <div id="q3" class="question">
+
+        <h2>What comes next?</h2>
+
+        <p style="font-size: 35px;">
+            🔴 🔴 🔵 🔴 🔴 🔵 🔴 🔴 ❓
+        </p>
+
+
+        <div class="answers">
+
+            <button class="answerBtn"
+                    data-q="3"
+                    data-value="red">
+
+                <img src="images/red.jpg"
+                     alt="Red">
+
+                <p>🔴 Red</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="3"
+                    data-value="blue">
+
+                <img src="images/blue.jpg"
+                     alt="Blue">
+
+                <p>🔵 Blue</p>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- Q4 - FRUSTRATION -->
+    <!-- ================================================= -->
+
+    <div id="q4" class="question">
+
+        <h2>Hit a problem . Now what</h2>
+
+        <div class="answers">
+
+            <button class="answerBtn"
+                    data-q="4"
+                    data-value="retry">
+
+                <img src="images/retry.jpg"
+                     alt="Try again">
+
+                <p>🔄 Try again</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="4"
+                    data-value="different">
+
+                <img src="images/different.jpg"
+                     alt="Try another way">
+
+                <p>🔀 Try another way</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="4"
+                    data-value="help">
+
+                <img src="images/help.jpg"
+                     alt="Ask for help">
+
+                <p>🤝 Ask for help</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="4"
+                    data-value="quit">
+
+                <img src="images/quit.jpg"
+                     alt="Give up">
+
+                <p>🏳️ Give up</p>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- Q5 - MENTAL APPROACH -->
+    <!-- ================================================= -->
+
+    <div id="q5" class="question">
+
+        <h2>New problem.What's your first move?</h2>
+
+        <div class="answers">
+
+            <button class="answerBtn"
+                    data-q="5"
+                    data-value="break">
+
+                <img src="images/break-down.jpg"
+                     alt="Break problem down">
+
+                <p>🧩 Break it down</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="5"
+                    data-value="experiment">
+
+                <img src="images/experiment.jpg"
+                     alt="Experiment">
+
+                <p>🧪 Experiment</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="5"
+                    data-value="search">
+
+                <img src="images/search.jpg"
+                     alt="Search">
+
+                <p>🔎 Search</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="5"
+                    data-value="ask">
+
+                <img src="images/ask.jpg"
+                     alt="Ask someone">
+
+                <p>🤝 Ask someone</p>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- Q6 - PHYSICAL -->
+    <!-- ================================================= -->
+
+    <div id="q6" class="question">
+
+        <h2>Can you ?</h2>
+
+        <div class="answers">
+
+            <button class="answerBtn"
+                    data-q="6"
+                    data-value="lift">
+
+                <img src="images/lift-box.jpg"
+                     alt="Lifting a heavy box">
+
+                <p>🏋️ Lift a heavy box</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="6"
+                    data-value="drag">
+
+                <img src="images/drag-box.jpg"
+                     alt="Dragging a heavy box">
+
+                <p>Or cant lift it </p>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- Q7 - ENDURANCE -->
+    <!-- ================================================= -->
+
+    <div id="q7" class="question">
+
+        <h2>Can you?</h2>
+
+        <div class="answers">
+
+            <button class="answerBtn"
+                    data-q="7"
+                    data-value="run">
+
+                <img src="images/running.jpg"
+                     alt="Running">
+
+                <p>🏃 Run 2 km</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="7"
+                    data-value="walk">
+
+                <img src="images/walking.jpg"
+                     alt="Walking">
+
+                <p>🚶 Walk 5 km</p>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- Q8 - PHYSICAL STRENGTH -->
+    <!-- ================================================= -->
+
+    <div id="q8" class="question">
+
+        <h2>Can you do this?</h2>
+
+        <div class="answers">
+
+            <button class="answerBtn"
+                    data-q="8"
+                    data-value="heavy_short">
+
+                <img src="images/heavy-short.jpg"
+                     alt="Heavy load">
+
+                <p>💪 Carry heavy box for 1 minute</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="8"
+                    data-value="light_long">
+
+                <img src="images/light-long.jpg"
+                     alt="Light load">
+
+                <p>🎒 Carry light box for 20 minutes </p>
+
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- Q9 - RESILIENCE -->
+    <!-- ================================================= -->
+
+    <div id="q9" class="question">
+
+        <h2>Lost 2 hours of work.</h2>
+
+        <div class="answers">
+
+            <button class="answerBtn"
+                    data-q="9"
+                    data-value="restart">
+
+                <img src="images/restart.jpg"
+                     alt="Start again">
+
+                <p>🔄 Start again</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="9"
+                    data-value="recover">
+
+                <img src="images/recover.jpg"
+                     alt="Recover work">
+
+                <p>🛠️ Recover it</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="9"
+                    data-value="break">
+
+                <img src="images/break.jpg"
+                     alt="Take a break">
+
+                <p>☕ Take a break</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="9"
+                    data-value="quit">
+
+                <img src="images/quit-work.jpg"
+                     alt="Quit">
+
+                <p>🏳️ Quit</p>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- Q10 - WORK STYLE -->
+    <!-- ================================================= -->
+
+    <div id="q10" class="question">
+
+        <h2>Would you rather?</h2>
+
+        <div class="answers">
+
+            <button class="answerBtn"
+                    data-q="10"
+                    data-value="alone">
+
+                <img src="images/work-alone.jpg"
+                     alt="Working alone">
+
+                <p>💻 Work alone</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="10"
+                    data-value="team">
+
+                <img src="images/work-team.jpg"
+                     alt="Working with a team">
+
+                <p>👥 Work with a team</p>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- Q11 - LEADERSHIP -->
+    <!-- ================================================= -->
+
+    <div id="q11" class="question">
+
+        <h2>Would you rather?</h2>
+
+        <div class="answers">
+
+            <button class="answerBtn"
+                    data-q="11"
+                    data-value="lead">
+
+                <img src="images/leader.jpg"
+                     alt="Leading">
+
+                <p>👑 Lead</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="11"
+                    data-value="follow">
+
+                <img src="images/follow.jpg"
+                     alt="Following">
+
+                <p>🤝 Follow</p>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- Q12 - RISK -->
+    <!-- ================================================= -->
+
+    <div id="q12" class="question">
+
+        <h2>Would you rather?</h2>
+
+        <div class="answers">
+
+            <button class="answerBtn"
+                    data-q="12"
+                    data-value="safe">
+
+                <img src="images/safe.jpg"
+                     alt="Safe choice">
+
+                <p>🛡️ Safe $10</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="12"
+                    data-value="risk">
+
+                <img src="images/risk.jpg"
+                     alt="Risky choice">
+
+                <p>🎲 50% chance of $30</p>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- Q13 - DECISION STYLE -->
+    <!-- ================================================= -->
+
+    <div id="q13" class="question">
+
+        <h2>Would you rather?</h2>
+
+        <div class="answers">
+
+            <button class="answerBtn"
+                    data-q="13"
+                    data-value="fast">
+
+                <img src="images/fast-choice.jpg"
+                     alt="Fast decision">
+
+                <p>⚡ Decide fast</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="13"
+                    data-value="think">
+
+                <img src="images/thinking.jpg"
+                     alt="Thinking">
+
+                <p>🧠 Think longer</p>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- Q14 - SOCIAL -->
+    <!-- ================================================= -->
+
+    <div id="q14" class="question">
+
+        <h2>Would you rather?</h2>
+
+        <div class="answers">
+
+            <button class="answerBtn"
+                    data-q="14"
+                    data-value="remind">
+
+                <img src="images/remind.jpg"
+                     alt="Remind teammate">
+
+                <p>💬 Remind them</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="14"
+                    data-value="confront">
+
+                <img src="images/confront.jpg"
+                     alt="Confront teammate">
+
+                <p>🗣️ Confront them</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="14"
+                    data-value="leader">
+
+                <img src="images/tell-leader.jpg"
+                     alt="Tell leader">
+
+                <p>📢 Tell the leader</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="14"
+                    data-value="ignore">
+
+                <img src="images/ignore.jpg"
+                     alt="Ignore">
+
+                <p>🙈 Ignore it</p>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- Q15 - PHYSICAL ENDURANCE -->
+    <!-- ================================================= -->
+
+    <div id="q15" class="question">
+
+        <h2>5 km walk?</h2>
+
+        <div class="answers">
+
+            <button class="answerBtn"
+                    data-q="15"
+                    data-value="easy">
+
+                <img src="images/easy-walk.jpg"
+                     alt="Easy walk">
+
+                <p>😎 Easy</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="15"
+                    data-value="fine">
+
+                <img src="images/fine-walk.jpg"
+                     alt="Fine walking">
+
+                <p>🙂 Fine</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="15"
+                    data-value="maybe">
+
+                <img src="images/maybe-walk.jpg"
+                     alt="Maybe walking">
+
+                <p>😐 Maybe</p>
+
+            </button>
+
+
+            <button class="answerBtn"
+                    data-q="15"
+                    data-value="no">
+
+                <img src="images/no-walk.jpg"
+                     alt="Too far">
+
+                <p>😵 Too far</p>
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <div id="q16" class="question">
+        <h2 id="eliminationPrompt">Which subject is getting cut first?</h2>
+        <div class="answers" id="eliminationButtons"></div>
+    </div>
+    <!-- ================================================= -->
+    <!-- RESULTS -->
+    <!-- ================================================= -->
+
+    <div id="result">
+
+        <h1>Done! 🎉</h1>
+
+        <p>Your answers have been recorded.</p>
+
+        <pre id="resultData"></pre>
+
+    </div>
+
+
+
+    <script>
+
+        /*
+        =====================================================
+        QUIZ SETTINGS
+        =====================================================
+        */
+
+        const totalQuestions = 16;
+
+        let currentQuestion = 1;
+
+        let startTime = Date.now();
+        const predefinedSubjects = [
+                    "Math", "Physics", "Chemistry", "Biology", "English",
+                    "Bangla", "Programming", "Economics", "History", "ICT"
+             ];
+        let remainingSubjects = [...predefinedSubjects];
+
+        let results = [];
+
+
+        /*
+        =====================================================
+        SHOW NEXT QUESTION
+        =====================================================
+        */
+
+        function showNext() {
+
+            const current =
+                document.getElementById("q" + currentQuestion);
+
+            if (current) {
+                current.classList.remove("active");
+            }
+
+
+            currentQuestion++;
+
+
+            if (currentQuestion <= totalQuestions) {
+
+                const next =
+                    document.getElementById("q" + currentQuestion);
+
+                next.classList.add("active");
+
+                startTime = Date.now();
+
+                  if (currentQuestion === 16) {
+                    showEliminationRound();
+                  }
+
+            }
+
+            else {
+
+                finishQuiz();
+
+            }
+
+        }
+        function showEliminationRound() {
+            if (remainingSubjects.length === 1) {
+                results.push({ question: 16, type: "favorite_subject", subject: remainingSubjects[0] });
+                finishQuiz();
+                return;
+            }
+
+            startTime = Date.now();
+            const container = document.getElementById("eliminationButtons");
+            container.innerHTML = "";
+            remainingSubjects.forEach(subject => {
+                const btn = document.createElement("button");
+                btn.className = "answerBtn";
+                btn.textContent = subject;
+                btn.onclick = () => eliminateSubject(subject);
+                container.appendChild(btn);
+            });
+            }
+
+            function eliminateSubject(subject) {
+            const timeTaken = Date.now() - startTime;
+            results.push({ question: 16, type: "elimination", subject: subject, timeTaken: timeTaken });
+            remainingSubjects = remainingSubjects.filter(s => s !== subject);
+            showEliminationRound();
+        }
+
+
+        /*
+        =====================================================
+        ANSWER
+        =====================================================
+        */
+
+        function answerQuestion(button) {
+
+            const endTime = Date.now();
+
+            const timeTaken =
+                endTime - startTime;
+
+
+            results.push({
+
+                question:
+                    Number(button.dataset.q),
+
+                answer:
+                    button.dataset.value,
+
+                /*
+                    milliseconds
+                */
+
+                timeTaken:
+                    timeTaken,
+
+                /*
+                    seconds
+                */
+
+                seconds:
+                    Number(
+                        (timeTaken / 1000)
+                        .toFixed(2)
+                    )
+
+            });
+
+
+            showNext();
+
+        }
+
+            function buildResultSummary(results) {
+            const portal = results.find(r => r.question === 1)?.answer;
+            const frustration = results.find(r => r.question === 4)?.answer;
+            const approach = results.find(r => r.question === 5)?.answer;
+
+            const portalTitles = {
+                tech: "Nexus Builder", business: "Empire Strategist",
+                creative: "Realm Creator", discovery: "Frontier Explorer",
+                wisdom: "Wisdom Keeper", mystic: "Mystic Explorer"
+            };
+
+            const frustrationText = {
+                retry: "You push through obstacles instead of quitting.",
+                different: "You adapt fast when something isn't working.",
+                help: "You know when to bring others in.",
+                quit: "You conserve energy for battles worth fighting."
+            };
+
+            return `
+                ✨ You're a ${portalTitles[portal] || "Wanderer"}
+
+                Under pressure: ${frustrationText[frustration] || "Still figuring that out."}
+            `;
+            }
+        /*
+        =====================================================
+        ATTACH BUTTON EVENTS
+        =====================================================
+        */
+
+        function attachAnswerListeners() {
+
+            document
+                .querySelectorAll(".answerBtn")
+                .forEach(button => {
+
+                    button.addEventListener(
+                        "click",
+                        () => {
+
+                            answerQuestion(button);
+
+                        }
+                    );
+
+                });
+
+        }
+
+
+        /*
+        =====================================================
+        FINISH
+        =====================================================
+        */
+
+                    function finishQuiz() {
+            document.getElementById("title").style.display = "none";
+            document.getElementById("q16").classList.remove("active");
+            document.getElementById("result").style.display = "block";
+
+            fetch("/quiz/submit", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ results: results })
+            })
+                .then(response => response.json())
+                .then(() => {
+                document.getElementById("resultData").textContent = buildResultSummary(results);
+                });
+
+            console.log("QUIZ RESULTS:", results);
+            }
+
+        
+
+
+        /*
+        =====================================================
+        START QUIZ
+        =====================================================
+        */
+
+        attachAnswerListeners();
+
+    </script>
+
+</body>
+
+</html>
+

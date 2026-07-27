@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Add Task</title>
+  </head>
+  <body>
+    <h1>Add a task</h1>
+
+    <input type="text" id="titleInput" placeholder="Task title" />
+
+    <select id="typeInput">
+      <option value="">-- Select type --</option>
+      <option value="study">Study</option>
+      <option value="chores">Chores</option>
+      <option value="personal">Personal</option>
+      <option value="work">Work</option>
+      <option value="other">Other</option>
+    </select>
+
+    <select id="subjectInput" style="display:none;">
+      <option value="">-- Select subject --</option>
+      <option value="math">Math</option>
+      <option value="physics">Physics</option>
+      <option value="chemistry">Chemistry</option>
+      <option value="biology">Biology</option>
+      <option value="english">English</option>
+      <option value="bangla">Bangla</option>
+      <option value="programming">Programming</option>
+      <option value="economics">Economics</option>
+      <option value="history">History</option>
+      <option value="ict">ICT</option>
+    </select>
+
+    <select id="difficultyInput">
+      <option value="instant">Instant</option>
+      <option value="easy">Easy</option>
+      <option value="medium">Medium</option>
+      <option value="hard">Hard</option>
+    </select>
+
+    <label>Deadline: <input type="datetime-local" id="deadlineInput" /></label>
+
+    <label>Duration (minutes): <input type="number" id="durationInput" placeholder="e.g. 120" min="1" /></label>
+    
+    <div id="stepsSection" style="display:none;">
+      <h3>Steps (for hard tasks)</h3>
+      <input type="text" id="stepInput" placeholder="Step description" />
+      <button id="addStepBtn">Add step</button>
+      <ul id="stepsList"></ul>
+    </div>
+
+    <button id="saveTaskBtn">Save task</button>
+
+    <script>
+      let steps = [];
+
+      document.getElementById("typeInput").addEventListener("change", (e) => {
+        document.getElementById("subjectInput").style.display =
+          e.target.value === "study" ? "block" : "none";
+      });
+
+      document.getElementById("difficultyInput").addEventListener("change", (e) => {
+        document.getElementById("stepsSection").style.display =
+          e.target.value === "hard" ? "block" : "none";
+      });
+
+      document.getElementById("addStepBtn").addEventListener("click", () => {
+        const text = document.getElementById("stepInput").value.trim();
+        if (text) {
+          steps.push(text);
+          document.getElementById("stepsList").innerHTML =
+            steps.map(s => `<li>${s}</li>`).join("");
+          document.getElementById("stepInput").value = "";
+        }
+      });
+
+      document.getElementById("saveTaskBtn").addEventListener("click", () => {
+        const type = document.getElementById("typeInput").value;
+        const category = type === "study"
+          ? document.getElementById("subjectInput").value
+          : type;
+
+        const difficulty = document.getElementById("difficultyInput").value;
+
+        const points =
+          difficulty === "instant" ? 1 :
+          difficulty === "easy" ? 5 :
+          difficulty === "medium" ? 10 :
+          20;
+
+        const task = {
+          title: document.getElementById("titleInput").value,
+          category: category,
+          difficulty: difficulty,
+          deadline: document.getElementById("deadlineInput").value || null,
+          duration_minutes: Number(document.getElementById("durationInput").value),
+          points: points,
+          steps: difficulty === "hard" ? steps : []
+        };
+
+       fetch("/tasks", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(task)
+        })
+          .then(response => response.json())
+          .then(() => {
+            window.location.href = "/";
+        });
+      });
+    </script>
+  </body>
+</html>

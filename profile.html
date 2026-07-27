@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px;
+
+            font-family: Arial, sans-serif;
+
+            background: #f3f4f6;
+            color: #202124;
+        }
+
+        .profile {
+            max-width: 1050px;
+            margin: auto;
+        }
+
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        .hero {
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 24px;
+
+            margin-bottom: 22px;
+
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .avatar {
+            width: 95px;
+            height: 95px;
+
+            border-radius: 50%;
+
+            background: #e8e8e8;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 45px;
+
+            flex-shrink: 0;
+        }
+
+        .hero h1 {
+            margin: 0 0 8px;
+            font-size: 32px;
+        }
+
+        .hero p {
+            margin: 0;
+            color: #777;
+        }
+
+
+        /* =========================================
+           SECTION
+        ========================================= */
+
+        .section {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 22px;
+
+            margin-bottom: 22px;
+        }
+
+        .sectionHeader {
+            margin-bottom: 20px;
+        }
+
+        .sectionHeader h2 {
+            margin: 0 0 5px;
+            font-size: 23px;
+        }
+
+        .sectionHeader p {
+            margin: 0;
+            color: #777;
+        }
+
+
+        /* =========================================
+           PROFILE CARDS
+        ========================================= */
+
+        .cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(280px, 1fr));
+
+            gap: 15px;
+        }
+
+        .card {
+            padding: 20px;
+
+            border-radius: 17px;
+
+            background: #f5f5f5;
+        }
+
+        .cardTop {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 10px;
+        }
+
+        .cardIcon {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 12px;
+
+            background: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 22px;
+        }
+
+        .card h3 {
+            margin: 0;
+
+            font-size: 17px;
+        }
+
+        .card p {
+            margin: 0;
+
+            line-height: 1.55;
+
+            color: #555;
+        }
+
+
+        /* =========================================
+           STRONGEST TRAITS
+        ========================================= */
+
+        .highlightGrid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(200px, 1fr));
+
+            gap: 15px;
+        }
+
+        .highlight {
+            padding: 20px;
+
+            border-radius: 17px;
+
+            background: #f5f5f5;
+
+            text-align: center;
+        }
+
+        .highlightIcon {
+            font-size: 32px;
+
+            margin-bottom: 8px;
+        }
+
+        .highlight h3 {
+            margin: 5px 0;
+        }
+
+        .highlight p {
+            margin: 0;
+
+            color: #777;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================================
+           DAY
+        ========================================= */
+
+        .timeGrid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(170px, 1fr));
+
+            gap: 15px;
+        }
+
+        .timeCard {
+            padding: 20px;
+
+            background: #f5f5f5;
+
+            border-radius: 17px;
+
+            text-align: center;
+        }
+
+        .timeIcon {
+            font-size: 30px;
+        }
+
+        .timeCard h3 {
+            margin: 8px 0 5px;
+        }
+
+        .timeCard p {
+            margin: 0;
+
+            color: #777;
+        }
+
+        .productiveBox {
+            margin-top: 15px;
+
+            padding: 25px;
+
+            border-radius: 18px;
+
+            background: #222;
+
+            color: white;
+
+            text-align: center;
+        }
+
+        .productiveBox p {
+            margin: 0 0 5px;
+
+            opacity: 0.75;
+        }
+
+        .productiveBox strong {
+            font-size: 36px;
+        }
+
+
+        /* =========================================
+           PROFILE SUMMARY
+        ========================================= */
+
+        .summary {
+            padding: 25px;
+
+            border-radius: 18px;
+
+            background: #f5f5f5;
+
+            line-height: 1.7;
+
+            color: #444;
+        }
+
+        .summary strong {
+            color: #222;
+        }
+
+
+        /* =========================================
+           LOADING
+        ========================================= */
+
+        #loading {
+            text-align: center;
+
+            padding: 70px;
+
+            color: #777;
+        }
+
+        #profileContent {
+            display: none;
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .hero {
+                padding: 25px;
+
+                flex-direction: column;
+
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 27px;
+            }
+
+            .section {
+                padding: 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="profile">
+
+
+    <!-- =========================================
+         LOADING
+    ========================================= -->
+
+    <div id="loading">
+        Looking at your profile...
+    </div>
+
+
+    <div id="profileContent">
+
+
+        <!-- =========================================
+             HEADER
+        ========================================= -->
+
+        <div class="hero">
+
+            <div class="avatar">
+                👤
+            </div>
+
+            <div>
+
+                <h1 id="userName">
+                    Your Profile
+                </h1>
+
+                <p id="username">
+                    Getting to know you...
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================================
+             QUICK SUMMARY
+        ========================================= -->
+
+        <div class="section">
+
+            <div class="sectionHeader">
+
+                <h2>🧬 Your Profile</h2>
+
+                <p>
+                    A little picture of how you tend to operate.
+                </p>
+
+            </div>
+
+
+            <div class="summary" id="summary">
+
+                Loading your profile...
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================================
+             STRONGEST TRAITS
+        ========================================= -->
+
+        <div class="section">
+
+            <div class="sectionHeader">
+
+                <h2>⭐ Your Strongest Traits</h2>
+
+                <p>
+                    The areas that stand out most from your answers.
+                </p>
+
+            </div>
+
+
+            <div class="highlightGrid" id="highlights">
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================================
+             MIND
+        ========================================= -->
+
+        <div class="section">
+
+            <div class="sectionHeader">
+
+                <h2>🧠 How You Think</h2>
+
+                <p>
+                    Your problem-solving and mental tendencies.
+                </p>
+
+            </div>
+
+
+            <div class="cards">
+
+
+                <div class="card">
+
+                    <div class="cardTop">
+
+                        <div class="cardIcon">
+                            🧩
+                        </div>
+
+                        <h3>
+                            Problem Solving
+                        </h3>
+
+                    </div>
+
+                    <p id="problemSolving"></p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="cardTop">
+
+                        <div class="cardIcon">
+                            🔥
+                        </div>
+
+                        <h3>
+                            Persistence
+                        </h3>
+
+                    </div>
+
+                    <p id="persistence"></p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="cardTop">
+
+                        <div class="cardIcon">
+                            💥
+                        </div>
+
+                        <h3>
+                            Resilience
+                        </h3>
+
+                    </div>
+
+                    <p id="resilience"></p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="cardTop">
+
+                        <div class="cardIcon">
+                            ⚡
+                        </div>
+
+                        <h3>
+                            Decision Making
+                        </h3>
+
+                    </div>
+
+                    <p id="decisionSpeed"></p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================================
+             PHYSICAL
+        ========================================= -->
+
+        <div class="section">
+
+            <div class="sectionHeader">
+
+                <h2>💪 Physical Capability</h2>
+
+                <p>
+                    What your answers suggest about your physical side.
+                </p>
+
+            </div>
+
+
+            <div class="cards">
+
+
+                <div class="card">
+
+                    <div class="cardTop">
+
+                        <div class="cardIcon">
+                            💪
+                        </div>
+
+                        <h3>
+                            Strength
+                        </h3>
+
+                    </div>
+
+                    <p id="strength"></p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="cardTop">
+
+                        <div class="cardIcon">
+                            🏃
+                        </div>
+
+                        <h3>
+                            Endurance
+                        </h3>
+
+                    </div>
+
+                    <p id="endurance"></p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================================
+             WORK & SOCIAL
+        ========================================= -->
+
+        <div class="section">
+
+            <div class="sectionHeader">
+
+                <h2>💼 Work & Social Style</h2>
+
+                <p>
+                    How you tend to approach people and responsibilities.
+                </p>
+
+            </div>
+
+
+            <div class="cards">
+
+
+                <div class="card">
+
+                    <div class="cardTop">
+
+                        <div class="cardIcon">
+                            🤝
+                        </div>
+
+                        <h3>
+                            Teamwork
+                        </h3>
+
+                    </div>
+
+                    <p id="teamwork"></p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="cardTop">
+
+                        <div class="cardIcon">
+                            👑
+                        </div>
+
+                        <h3>
+                            Leadership
+                        </h3>
+
+                    </div>
+
+                    <p id="leadership"></p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="cardTop">
+
+                        <div class="cardIcon">
+                            🧍
+                        </div>
+
+                        <h3>
+                            Independence
+                        </h3>
+
+                    </div>
+
+                    <p id="independence"></p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="cardTop">
+
+                        <div class="cardIcon">
+                            🎲
+                        </div>
+
+                        <h3>
+                            Risk & Safety
+                        </h3>
+
+                    </div>
+
+                    <p id="riskTolerance"></p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================================
+             YOUR DAY
+        ========================================= -->
+
+        <div class="section">
+
+            <div class="sectionHeader">
+
+                <h2>⏰ Your 24-Hour Day</h2>
+
+                <p>
+                    The time you've permanently allocated to daily necessities.
+                </p>
+
+            </div>
+
+
+            <div class="timeGrid">
+
+
+                <div class="timeCard">
+
+                    <div class="timeIcon">
+                        😴
+                    </div>
+
+                    <h3>
+                        Sleep
+                    </h3>
+
+                    <p>
+                        <span id="sleepHours">0</span>
+                        hours
+                    </p>
+
+                </div>
+
+
+                <div class="timeCard">
+
+                    <div class="timeIcon">
+                        🍽️
+                    </div>
+
+                    <h3>
+                        Eating
+                    </h3>
+
+                    <p>
+                        <span id="eatingHours">0</span>
+                        hours
+                    </p>
+
+                </div>
+
+
+                <div class="timeCard">
+
+                    <div class="timeIcon">
+                        🚿
+                    </div>
+
+                    <h3>
+                        Bath
+                    </h3>
+
+                    <p>
+                        <span id="bathHours">0</span>
+                        hours
+                    </p>
+
+                </div>
+
+
+                <div class="timeCard">
+
+                    <div class="timeIcon">
+                        🚽
+                    </div>
+
+                    <h3>
+                        Toilet
+                    </h3>
+
+                    <p>
+                        <span id="toiletHours">0</span>
+                        hours
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="productiveBox">
+
+                <p>
+                    Time remaining for productivity
+                </p>
+
+                <strong id="productiveHours">
+                    24 hours
+                </strong>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+/* =====================================================
+   PROFILE DESCRIPTIONS
+===================================================== */
+
+
+function describeTrait(score, trait) {
+
+
+    if (trait === "strength") {
+
+        if (score >= 80)
+            return "You appear very comfortable with physically demanding tasks.";
+
+        if (score >= 65)
+            return "You seem capable of handling fairly demanding physical tasks.";
+
+        if (score >= 50)
+            return "You seem reasonably comfortable with normal physical demands.";
+
+        return "You may prefer keeping physically demanding tasks manageable.";
+
+    }
+
+
+    if (trait === "endurance") {
+
+        if (score >= 80)
+            return "Longer physical activities seem to be well within your comfort zone.";
+
+        if (score >= 65)
+            return "You seem able to keep going through fairly long activities.";
+
+        if (score >= 50)
+            return "You have a fairly balanced tolerance for longer activities.";
+
+        return "Long activities may become tiring for you relatively quickly.";
+
+    }
+
+
+    if (trait === "persistence") {
+
+        if (score >= 80)
+            return "Once you start something, you seem quite difficult to stop.";
+
+        if (score >= 65)
+            return "You usually keep trying when something becomes difficult.";
+
+        if (score >= 50)
+            return "You can stick with difficult tasks, although it depends on the situation.";
+
+        return "You may lose motivation when something becomes frustrating.";
+
+    }
+
+
+    if (trait === "problem_solving") {
+
+        if (score >= 80)
+            return "You strongly tend to look for another way when your first approach fails.";
+
+        if (score >= 65)
+            return "You tend to look for alternative approaches when something doesn't work.";
+
+        if (score >= 50)
+            return "You balance trying things yourself with looking for help.";
+
+        return "You may prefer guidance when a problem becomes difficult.";
+
+    }
+
+
+    if (trait === "resilience") {
+
+        if (score >= 80)
+            return "Setbacks don't seem to keep you down for very long.";
+
+        if (score >= 65)
+            return "You generally recover and continue after things go wrong.";
+
+        if (score >= 50)
+            return "You can recover from setbacks, though some situations affect you more than others.";
+
+        return "Major setbacks may take some time before you're ready to continue.";
+
+    }
+
+
+    if (trait === "teamwork") {
+
+        if (score >= 80)
+            return "You seem highly comfortable cooperating and working with others.";
+
+        if (score >= 65)
+            return "You seem comfortable working with other people when needed.";
+
+        if (score >= 50)
+            return "You can work with others, but you don't necessarily depend on a team.";
+
+        return "You may prefer handling things yourself rather than relying on others.";
+
+    }
+
+
+    if (trait === "leadership") {
+
+        if (score >= 80)
+            return "You naturally tend to take charge when something needs direction.";
+
+        if (score >= 65)
+            return "You're reasonably comfortable taking responsibility and leading.";
+
+        if (score >= 50)
+            return "You can take the lead when necessary, but don't always need to.";
+
+        return "You may prefer supporting someone else rather than taking charge.";
+
+    }
+
+
+    if (trait === "independence") {
+
+        if (score >= 80)
+            return "You strongly prefer figuring things out and getting things done on your own.";
+
+        if (score >= 65)
+            return "You're fairly comfortable working independently.";
+
+        if (score >= 50)
+            return "You seem comfortable both working alone and working with others.";
+
+        return "You may prefer having people around when handling difficult tasks.";
+
+    }
+
+
+    if (trait === "risk") {
+
+        if (score >= 80)
+            return "You're fairly comfortable taking chances when the potential payoff seems worth it.";
+
+        if (score >= 65)
+            return "You're willing to take reasonable risks when they make sense.";
+
+        if (score >= 50)
+            return "You seem to balance caution with taking opportunities.";
+
+        return "You tend to favor safer choices over uncertain ones.";
+
+    }
+
+
+    if (trait === "decision") {
+
+        if (score >= 80)
+            return "You tend to make decisions quickly rather than spending a long time thinking.";
+
+        if (score >= 65)
+            return "You usually make decisions without overthinking them.";
+
+        if (score >= 50)
+            return "You balance quick decisions with taking time to think things through.";
+
+        return "You tend to think carefully before committing to a decision.";
+
+    }
+
+
+    return "";
+
+}
+
+
+
+/* =====================================================
+   FIND STRONGEST TRAITS
+===================================================== */
+
+
+const traitInfo = {
+
+    physical_strength: {
+        name: "Physical capability",
+        icon: "💪"
+    },
+
+    endurance: {
+        name: "Endurance",
+        icon: "🏃"
+    },
+
+    persistence: {
+        name: "Persistence",
+        icon: "🔥"
+    },
+
+    problem_solving: {
+        name: "Problem solving",
+        icon: "🧩"
+    },
+
+    resilience: {
+        name: "Resilience",
+        icon: "💥"
+    },
+
+    teamwork: {
+        name: "Teamwork",
+        icon: "🤝"
+    },
+
+    leadership: {
+        name: "Leadership",
+        icon: "👑"
+    },
+
+    independence: {
+        name: "Independence",
+        icon: "🧍"
+    },
+
+    risk_tolerance: {
+        name: "Risk tolerance",
+        icon: "🎲"
+    },
+
+    decision_speed: {
+        name: "Decision making",
+        icon: "⚡"
+    }
+
+};
+
+
+
+function showStrongestTraits(profile) {
+
+
+    const traits = [];
+
+
+    for (const key in traitInfo) {
+
+        if (
+            typeof profile[key] !== "number"
+        ) {
+            continue;
+        }
+
+
+        traits.push({
+
+            key: key,
+
+            score: profile[key],
+
+            name: traitInfo[key].name,
+
+            icon: traitInfo[key].icon
+
+        });
+
+    }
+
+
+    traits.sort(
+        (a, b) => b.score - a.score
+    );
+
+
+    const top =
+        traits.slice(0, 3);
+
+
+    const container =
+        document.getElementById(
+            "highlights"
+        );
+
+
+    container.innerHTML = "";
+
+
+    top.forEach(trait => {
+
+        const card =
+            document.createElement("div");
+
+
+        card.className =
+            "highlight";
+
+
+        card.innerHTML = `
+
+            <div class="highlightIcon">
+                ${trait.icon}
+            </div>
+
+            <h3>
+                ${trait.name}
+            </h3>
+
+            <p>
+                ${describeTrait(
+                    trait.score,
+                    trait.key
+                )}
+            </p>
+
+        `;
+
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+
+/* =====================================================
+   CREATE SUMMARY
+===================================================== */
+
+
+function createSummary(profile) {
+
+
+    const traits = [];
+
+
+    for (const key in traitInfo) {
+
+        if (
+            typeof profile[key] === "number"
+        ) {
+
+            traits.push({
+
+                key: key,
+
+                score: profile[key],
+
+                name: traitInfo[key].name
+
+            });
+
+        }
+
+    }
+
+
+    traits.sort(
+        (a, b) => b.score - a.score
+    );
+
+
+    const strongest =
+        traits[0];
+
+
+    const weakest =
+        traits[traits.length - 1];
+
+
+    return `
+
+        Based on your answers, you seem strongest in
+        <strong>${strongest.name.toLowerCase()}</strong>.
+        ${describeTrait(
+            strongest.score,
+            strongest.key
+        )}
+
+        <br><br>
+
+        Your profile isn't a judgment of what you
+        <strong>can or cannot do</strong>.
+        It's simply a picture of the tendencies
+        suggested by your answers.
+
+    `;
+
+}
+
+
+
+/* =====================================================
+   LOAD PROFILE
+===================================================== */
+
+
+async function loadProfile() {
+
+
+    try {
+
+
+        const response =
+            await fetch("/profile");
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load profile"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        const user =
+            data.user;
+
+
+        const profile =
+            data.profile;
+
+
+
+        /* =====================================
+           USER
+        ===================================== */
+
+        document
+            .getElementById("userName")
+            .textContent =
+                user.name || user.username;
+
+
+        document
+            .getElementById("username")
+            .textContent =
+                "@" + user.username;
+
+
+
+        /* =====================================
+           TRAITS
+        ===================================== */
+
+        document
+            .getElementById("problemSolving")
+            .textContent =
+                describeTrait(
+                    profile.problem_solving,
+                    "problem_solving"
+                );
+
+
+        document
+            .getElementById("persistence")
+            .textContent =
+                describeTrait(
+                    profile.persistence,
+                    "persistence"
+                );
+
+
+        document
+            .getElementById("resilience")
+            .textContent =
+                describeTrait(
+                    profile.resilience,
+                    "resilience"
+                );
+
+
+        document
+            .getElementById("decisionSpeed")
+            .textContent =
+                describeTrait(
+                    profile.decision_speed,
+                    "decision"
+                );
+
+
+        document
+            .getElementById("strength")
+            .textContent =
+                describeTrait(
+                    profile.physical_strength,
+                    "strength"
+                );
+
+
+        document
+            .getElementById("endurance")
+            .textContent =
+                describeTrait(
+                    profile.endurance,
+                    "endurance"
+                );
+
+
+        document
+            .getElementById("teamwork")
+            .textContent =
+                describeTrait(
+                    profile.teamwork,
+                    "teamwork"
+                );
+
+
+        document
+            .getElementById("leadership")
+            .textContent =
+                describeTrait(
+                    profile.leadership,
+                    "leadership"
+                );
+
+
+        document
+            .getElementById("independence")
+            .textContent =
+                describeTrait(
+                    profile.independence,
+                    "independence"
+                );
+
+
+        document
+            .getElementById("riskTolerance")
+            .textContent =
+                describeTrait(
+                    profile.risk_tolerance,
+                    "risk"
+                );
+
+
+
+        /* =====================================
+           STRONGEST
+        ===================================== */
+
+        showStrongestTraits(profile);
+
+
+
+        /* =====================================
+           SUMMARY
+        ===================================== */
+
+        document
+            .getElementById("summary")
+            .innerHTML =
+                createSummary(profile);
+
+
+
+        /* =====================================
+           TIME
+        ===================================== */
+
+        document
+            .getElementById("sleepHours")
+            .textContent =
+                profile.sleep_hours;
+
+
+        document
+            .getElementById("eatingHours")
+            .textContent =
+                profile.eating_hours;
+
+
+        document
+            .getElementById("bathHours")
+            .textContent =
+                profile.bath_hours;
+
+
+        document
+            .getElementById("toiletHours")
+            .textContent =
+                profile.toilet_hours;
+
+
+
+        const productiveHours =
+            24
+            - profile.sleep_hours
+            - profile.eating_hours
+            - profile.bath_hours
+            - profile.toilet_hours;
+
+
+        document
+            .getElementById("productiveHours")
+            .textContent =
+                productiveHours + " hours";
+
+
+
+        /* =====================================
+           SHOW PAGE
+        ===================================== */
+
+        document
+            .getElementById("loading")
+            .style.display = "none";
+
+
+        document
+            .getElementById("profileContent")
+            .style.display = "block";
+
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+
+        document
+            .getElementById("loading")
+            .textContent =
+                "Could not load your profile.";
+
+    }
+
+}
+
+
+loadProfile();
+
+</script>
+
+
+</body>
+
+</html>

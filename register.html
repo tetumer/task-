@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+  <head>
+      <title>Register</title>
+  </head>
+  <body>
+     <h1>Register</h1>
+     <input type="text" id="nameInput" placeholder="Name" />
+     <input type="text" id="usernameInput" placeholder="Username" />
+     <input type="password" id="passwordInput" placeholder="Password" />
+     <button id="registerBtn">Register</button>
+    <script>
+        document.getElementById("registerBtn").addEventListener("click", () => {
+            const newUser = {
+                  name: document.getElementById("nameInput").value,
+                        username: document.getElementById("usernameInput").value,
+                              password: document.getElementById("passwordInput").value
+                                  };
+
+                                      fetch("/register", {
+                                            method: "POST",
+                                                  headers: { "Content-Type": "application/json" },
+                                                        body: JSON.stringify(newUser)
+                                                            })
+                                                                  .then(response => response.json())
+                                                                        .then(data => {
+                                                                                if (data.success) {
+                                                                                          alert("Registered successfully!");
+                                                                                                  } else {
+                                                                                                            alert(data.error);
+                                                                                                                    }
+                                                                                                                          });
+                                                                                                                            });
+                                                                                                                            </script>
+    </body>
+</html>

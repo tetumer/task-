@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Shop</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px;
+
+            font-family: Arial, sans-serif;
+
+            background: #f4f4f4;
+        }
+
+        .shop {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        /* =========================
+           TOP BAR
+        ========================= */
+
+        .topBar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 20px;
+
+            background: white;
+
+            border-radius: 15px;
+
+            margin-bottom: 25px;
+        }
+
+        .points {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .productive {
+            font-size: 18px;
+        }
+
+
+        /* =========================
+           SHOP ITEMS
+        ========================= */
+
+        .items {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+
+            gap: 20px;
+        }
+
+        .item {
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 15px;
+
+            text-align: center;
+
+            box-shadow:
+                0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .item img {
+            width: 150px;
+            height: 120px;
+
+            object-fit: cover;
+
+            border-radius: 12px;
+
+            margin-bottom: 10px;
+        }
+
+        .item h3 {
+            margin: 8px 0;
+        }
+
+        .item p {
+            margin: 5px 0;
+        }
+
+        .owned {
+            font-weight: bold;
+        }
+
+        .buyBtn {
+            margin-top: 15px;
+
+            width: 100%;
+
+            padding: 12px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #222;
+
+            color: white;
+
+            font-size: 16px;
+
+            cursor: pointer;
+        }
+
+        .buyBtn:hover:not(:disabled) {
+            opacity: 0.8;
+        }
+
+        .buyBtn:disabled {
+            background: #aaa;
+
+            cursor: not-allowed;
+        }
+
+
+        /* =========================
+           PURCHASE HISTORY
+        ========================= */
+
+        .history {
+            margin-top: 30px;
+
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 15px;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 12px;
+
+            border-bottom: 1px solid #ddd;
+
+            text-align: center;
+        }
+
+        th {
+            text-align: center;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="shop">
+
+
+    <!-- =========================
+         TOP INFORMATION
+    ========================= -->
+
+    <div class="topBar">
+
+        <div class="points">
+
+            💰 Points:
+            <span id="pointDisplay">500</span>
+
+        </div>
+
+
+        <div class="productive">
+
+            💼 Productive time:
+            <strong id="productiveDisplay">
+                24h
+            </strong>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         SHOP ITEMS
+    ========================= -->
+
+    <div class="items">
+
+
+        <!-- SLEEP -->
+
+        <div class="item">
+
+            <img
+                src="images/sleep.jpg"
+                alt="Sleep"
+            >
+
+            <h3>😴 Sleep</h3>
+
+            <p>
+                Owned:
+                <span id="sleepOwned">
+                    0
+                </span>
+                / 8 hours
+            </p>
+
+            <p>
+                100 points / hour
+            </p>
+
+            <button
+                class="buyBtn"
+                id="sleepBtn"
+                onclick="buyTime('sleep')"
+            >
+                Buy 1 hour
+            </button>
+
+        </div>
+
+
+
+        <!-- EATING -->
+
+        <div class="item">
+
+            <img
+                src="images/eating.jpg"
+                alt="Eating"
+            >
+
+            <h3>🍽️ Eating</h3>
+
+            <p>
+                Owned:
+                <span id="eatingOwned">
+                    0
+                </span>
+                / 5 hours
+            </p>
+
+            <p>
+                50 points / hour
+            </p>
+
+            <button
+                class="buyBtn"
+                id="eatingBtn"
+                onclick="buyTime('eating')"
+            >
+                Buy 1 hour
+            </button>
+
+        </div>
+
+
+
+        <!-- BATH -->
+
+        <div class="item">
+
+            <img
+                src="images/bath.jpg"
+                alt="Bath"
+            >
+
+            <h3>🚿 Bath</h3>
+
+            <p>
+                Owned:
+                <span id="bathOwned">
+                    0
+                </span>
+                / 1 hour
+            </p>
+
+            <p>
+                50 points / hour
+            </p>
+
+            <button
+                class="buyBtn"
+                id="bathBtn"
+                onclick="buyTime('bath')"
+            >
+                Buy 1 hour
+            </button>
+
+        </div>
+
+
+
+        <!-- TOILET -->
+
+        <div class="item">
+
+            <img
+                src="images/toilet.jpg"
+                alt="Toilet"
+            >
+
+            <h3>🚽 Toilet</h3>
+
+            <p>
+                Owned:
+                <span id="toiletOwned">
+                    0
+                </span>
+                / 1 hour
+            </p>
+
+            <p>
+                50 points / hour
+            </p>
+
+            <button
+                class="buyBtn"
+                id="toiletBtn"
+                onclick="buyTime('toilet')"
+            >
+                Buy 1 hour
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         PURCHASE HISTORY
+    ========================= -->
+
+    <div class="history">
+
+        <h2>Purchased Time</h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Activity
+                    </th>
+
+                    <th>
+                        Hours
+                    </th>
+
+                    <th>
+                        Points
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="purchaseTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+let userPoints = 0;
+let profile = {};
+
+const itemMeta = {
+  sleep: { name: "😴 Sleep", maxHours: 8, price: 100, column: "sleep_hours" },
+  eating: { name: "🍽️ Eating", maxHours: 5, price: 50, column: "eating_hours" },
+  bath: { name: "🚿 Bath", maxHours: 1, price: 50, column: "bath_hours" },
+  toilet: { name: "🚽 Toilet", maxHours: 1, price: 50, column: "toilet_hours" }
+};
+
+function loadShopData() {
+  fetch("/shop/data")
+    .then(response => response.json())
+    .then(data => {
+      userPoints = data.wallet.balance;
+      profile = data.profile;
+      updateShop();
+    });
+}
+
+function buyTime(itemId) {
+  fetch("/shop/buy", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ item: itemId })
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
+      userPoints = data.wallet.balance;
+      profile = data.profile;
+      updateShop();
+    });
+}
+
+function getProductiveHours() {
+  let allocatedHours = 0;
+  for (const meta of Object.values(itemMeta)) {
+    allocatedHours += profile[meta.column] || 0;
+  }
+  return 24 - allocatedHours;
+}
+
+function updateShop() {
+  document.getElementById("pointDisplay").textContent = userPoints;
+
+  document.getElementById("sleepOwned").textContent = profile.sleep_hours || 0;
+  document.getElementById("eatingOwned").textContent = profile.eating_hours || 0;
+  document.getElementById("bathOwned").textContent = profile.bath_hours || 0;
+  document.getElementById("toiletOwned").textContent = profile.toilet_hours || 0;
+
+  document.getElementById("productiveDisplay").textContent = getProductiveHours() + "h";
+
+  updateButton("sleepBtn", itemMeta.sleep);
+  updateButton("eatingBtn", itemMeta.eating);
+  updateButton("bathBtn", itemMeta.bath);
+  updateButton("toiletBtn", itemMeta.toilet);
+
+  updatePurchaseTable();
+}
+
+function updateButton(buttonId, meta) {
+  const button = document.getElementById(buttonId);
+  const owned = profile[meta.column] || 0;
+
+  if (owned >= meta.maxHours) {
+    button.disabled = true;
+    button.textContent = "✓ Maximum reached";
+    return;
+  }
+
+  if (userPoints < meta.price) {
+    button.disabled = true;
+    button.textContent = "Not enough points";
+    return;
+  }
+
+  button.disabled = false;
+  button.textContent = "Buy 1 hour";
+}
+
+function updatePurchaseTable() {
+  const table = document.getElementById("purchaseTable");
+  table.innerHTML = "";
+
+  for (const [key, meta] of Object.entries(itemMeta)) {
+    const owned = profile[meta.column] || 0;
+    if (owned === 0) continue;
+
+    const row = document.createElement("tr");
+    row.innerHTML = `<td>${meta.name}</td><td>${owned}h</td><td>${owned * meta.price} pts</td>`;
+    table.appendChild(row);
+  }
+}
+
+loadShopData();
+</script>
+
+</body>
+
+</html>
+

@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+  <head>
+    <title>home</title>
+  </head>
+  <body>
+    <h1>Here are the Tasks</h1>
+    <p>Wallet: <span id="walletBalance">0</span> points</p>
+    <table border="1" id="task_table">
+      <tr>
+        <th>Task name</th>
+        <th>Priority</th>
+        <th>Point</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </table>
+    <a href="/addtask">Add a task</a>
+    <script>
+        fetch("/tasks")
+  .then(response => response.json())
+  .then(data => {
+    if (data.error) {
+      window.location.href = "/login";
+      return;
+    }
+    const table = document.getElementById("task_table");
+data.filter(task => task.status === "pending").forEach((task) => {
+  const row = document.createElement("tr");
+
+      if (task.difficulty === "hard") {
+        let stepsHtml = "<ul>";
+        task.steps.forEach(step => {
+          const checkbox = step.completed
+            ? "✅"
+            : `<button onclick="completeStep(${task.id}, ${step.id})">Complete</button>`;
+          stepsHtml += `<li>${step.step_text} (${step.step_points} pts) ${checkbox}</li>`;
+        });
+        stepsHtml += "</ul>";
+
+        row.innerHTML = `
+          <td>${task.title}</td>
+          <td>${task.category}</td>
+          <td>${task.difficulty}</td>
+          <td>${task.status}</td>
+          <td>${task.points}</td>
+          <td>${stepsHtml}</td>
+        `;
+      } else {
+        row.innerHTML = `
+          <td>${task.title}</td>
+          <td>${task.category}</td>
+          <td>${task.difficulty}</td>
+          <td>${task.status}</td>
+          <td>${task.points}</td>
+          <td>
+            <button onclick="completeTask(${task.id})">Complete</button>
+            <button onclick="deleteTask(${task.id})">Delete</button>
+          </td>
+        `;
+      }
+    table.appendChild(row);
+});
+
+      
+   
+  });
+
+fetch("/wallet")
+  .then(response => response.json())
+  .then(wallet => {
+    document.getElementById("walletBalance").textContent = wallet.balance;
+  });
+
+function completeTask(id) {
+  fetch(`/tasks/${id}/complete`, { method: "POST" })
+    .then(response => response.json())
+    .then(() => {
+      window.location.reload();
+    });
+}
+
+function completeStep(taskId, stepId) {
+  fetch(`/tasks/${taskId}/steps/${stepId}/complete`, { method: "POST" })
+    .then(response => response.json())
+    .then(() => {
+      window.location.reload();
+    });
+}
+
+function deleteTask(id) {
+  fetch(`/tasks/${id}`, { method: "DELETE" })
+    .then((response) => response.json())
+    .then(() => {
+      window.location.reload();
+    });
+}
+    </script>
+  </body>
+</html>

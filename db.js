@@ -1,0 +1,103 @@
+const Database = require("better-sqlite3");
+const db = new Database("tasks.db");
+
+db.exec(`
+  CREATE TABLE IF NOT EXISTS tasks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    title TEXT NOT NULL,
+    category TEXT NOT NULL,
+    difficulty TEXT NOT NULL,
+    deadline TEXT,
+    reminder_time TEXT,
+    status TEXT NOT NULL DEFAULT 'pending',
+    points INTEGER NOT NULL DEFAULT 0,
+    xp INTEGER NOT NULL DEFAULT 0
+  )
+`);
+try {
+  db.exec(`ALTER TABLE tasks ADD COLUMN completed_at TEXT`);
+} catch (err) {
+ 
+}
+try {
+  db.exec(`ALTER TABLE tasks ADD COLUMN duration_minutes INTEGER`);
+} catch (err) {
+  
+}
+
+db.exec(`
+  CREATE TABLE IF NOT EXISTS task_steps (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    task_id INTEGER NOT NULL,
+    step_text TEXT NOT NULL,
+    step_points INTEGER NOT NULL DEFAULT 0,
+    completed INTEGER NOT NULL DEFAULT 0
+  )
+`);
+
+db.exec(`
+  CREATE TABLE IF NOT EXISTS wallet (
+    user_id INTEGER PRIMARY KEY,
+    balance INTEGER NOT NULL DEFAULT 0
+  )
+`);
+
+db.exec(`
+  CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    username TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL
+  )
+`);
+
+db.exec(`
+  CREATE TABLE IF NOT EXISTS subjects (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    subject_name TEXT NOT NULL,
+    understanding TEXT NOT NULL
+  )
+`);
+db.exec(`
+  CREATE TABLE IF NOT EXISTS quiz_results (
+    user_id INTEGER PRIMARY KEY,
+    results TEXT NOT NULL,
+    submitted_at TEXT NOT NULL
+  )
+`);
+
+db.exec(`
+  CREATE TABLE IF NOT EXISTS profile (
+    user_id INTEGER PRIMARY KEY,
+
+    -- Physical
+    physical_strength INTEGER NOT NULL DEFAULT 50,
+    endurance INTEGER NOT NULL DEFAULT 50,
+
+    -- Mental / behavioral
+    persistence INTEGER NOT NULL DEFAULT 50,
+    problem_solving INTEGER NOT NULL DEFAULT 50,
+    resilience INTEGER NOT NULL DEFAULT 50,
+
+    -- Work / social
+    teamwork INTEGER NOT NULL DEFAULT 50,
+    leadership INTEGER NOT NULL DEFAULT 50,
+    independence INTEGER NOT NULL DEFAULT 50,
+
+    -- Decision making
+    risk_tolerance INTEGER NOT NULL DEFAULT 50,
+    decision_speed INTEGER NOT NULL DEFAULT 50,
+
+    -- Permanent daily time allocation
+    sleep_hours INTEGER NOT NULL DEFAULT 0,
+    eating_hours INTEGER NOT NULL DEFAULT 0,
+    bath_hours INTEGER NOT NULL DEFAULT 0,
+    toilet_hours INTEGER NOT NULL DEFAULT 0,
+
+    FOREIGN KEY (user_id)
+      REFERENCES users(id)
+  )
+`);
+module.exports = db;
