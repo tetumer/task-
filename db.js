@@ -26,6 +26,16 @@ try {
   
 }
 
+
+try {
+  db.exec(`ALTER TABLE tasks ADD COLUMN actual_minutes INTEGER`);
+} catch (err) {}
+
+try {
+  db.exec(`ALTER TABLE tasks ADD COLUMN slack_minutes INTEGER`);
+} catch (err) {}
+
+
 db.exec(`
   CREATE TABLE IF NOT EXISTS task_steps (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -71,31 +81,20 @@ db.exec(`
 db.exec(`
   CREATE TABLE IF NOT EXISTS profile (
     user_id INTEGER PRIMARY KEY,
-
-    -- Physical
     physical_strength INTEGER NOT NULL DEFAULT 50,
     endurance INTEGER NOT NULL DEFAULT 50,
-
-    -- Mental / behavioral
     persistence INTEGER NOT NULL DEFAULT 50,
     problem_solving INTEGER NOT NULL DEFAULT 50,
     resilience INTEGER NOT NULL DEFAULT 50,
-
-    -- Work / social
     teamwork INTEGER NOT NULL DEFAULT 50,
     leadership INTEGER NOT NULL DEFAULT 50,
     independence INTEGER NOT NULL DEFAULT 50,
-
-    -- Decision making
     risk_tolerance INTEGER NOT NULL DEFAULT 50,
     decision_speed INTEGER NOT NULL DEFAULT 50,
-
-    -- Permanent daily time allocation
     sleep_hours INTEGER NOT NULL DEFAULT 0,
     eating_hours INTEGER NOT NULL DEFAULT 0,
     bath_hours INTEGER NOT NULL DEFAULT 0,
     toilet_hours INTEGER NOT NULL DEFAULT 0,
-
     FOREIGN KEY (user_id)
       REFERENCES users(id)
   )

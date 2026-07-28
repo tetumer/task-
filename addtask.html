@@ -52,6 +52,13 @@
     <button id="saveTaskBtn">Save task</button>
 
     <script>
+
+      const maxMinutesByDifficulty = {
+          instant: 30,
+          easy: 120,
+          medium: 480,
+          hard: 1440
+        };
       let steps = [];
 
       document.getElementById("typeInput").addEventListener("change", (e) => {
@@ -97,6 +104,14 @@
           points: points,
           steps: difficulty === "hard" ? steps : []
         };
+
+        const duration = Number(document.getElementById("durationInput").value);
+          const maxAllowed = maxMinutesByDifficulty[difficulty];
+
+          if (duration > maxAllowed) {
+            alert(`That's too long for a ${difficulty} task. Max is ${maxAllowed} minutes.`);
+            return; 
+        }
 
        fetch("/tasks", {
           method: "POST",

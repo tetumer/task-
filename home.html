@@ -73,7 +73,14 @@ fetch("/wallet")
   });
 
 function completeTask(id) {
-  fetch(`/tasks/${id}/complete`, { method: "POST" })
+  const actualMinutes = prompt("How long did this actually take (minutes)?");
+  if (actualMinutes === null) return;
+
+  fetch(`/tasks/${id}/complete`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ actual_minutes: Number(actualMinutes) })
+  })
     .then(response => response.json())
     .then(() => {
       window.location.reload();
