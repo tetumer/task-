@@ -1,14 +1,179 @@
+<style>
+    .mainNav {
+        width: calc(100% - 40px);
+        max-width: 1200px;
+        margin: 20px auto;
+
+        display: flex;
+        align-items: center;
+        gap: 30px;
+
+        padding: 12px 18px;
+
+        background: white;
+        border-radius: 16px;
+
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+        font-family: Arial, sans-serif;
+    }
+
+    /* LOGO */
+
+    .navLogo {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+
+        text-decoration: none;
+        color: #222;
+
+        white-space: nowrap;
+    }
+
+    .navChinese {
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .navBrand {
+        font-size: 18px;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+
+    /* LINKS */
+
+    .navLinks {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        flex: 1;
+    }
+
+    .navLinks a {
+        padding: 9px 13px;
+
+        border-radius: 9px;
+
+        text-decoration: none;
+        color: #555;
+
+        font-size: 15px;
+
+        transition: 0.2s;
+    }
+
+    .navLinks a:hover {
+        background: #f1f1f1;
+        color: #222;
+    }
+
+    .navLinks a.active {
+        background: #222;
+        color: white;
+    }
+
+
+    /* RIGHT SIDE */
+
+    .navRight {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .navWallet {
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+    #logoutBtn {
+        padding: 9px 14px;
+
+        border: none;
+        border-radius: 9px;
+
+        background: #eee;
+        color: #333;
+
+        cursor: pointer;
+
+        font-size: 14px;
+    }
+
+    #logoutBtn:hover {
+        background: #ddd;
+    }
+
+
+    /* MOBILE */
+
+    @media (max-width: 700px) {
+
+        .mainNav {
+            width: calc(100% - 20px);
+            margin: 10px auto;
+
+            gap: 12px;
+
+            padding: 10px 12px;
+
+            flex-wrap: wrap;
+        }
+
+        .navLinks {
+            order: 3;
+
+            width: 100%;
+
+            overflow-x: auto;
+
+            justify-content: flex-start;
+        }
+
+        .navLinks a {
+            white-space: nowrap;
+        }
+
+        .navRight {
+            margin-left: auto;
+        }
+
+        .navChinese {
+            font-size: 24px;
+        }
+
+        .navBrand {
+            font-size: 16px;
+        }
+    }
+</style>
+
+
 <nav class="mainNav">
-  <a href="/" class="navLogo">✦ App</a>
-  <div class="navLinks">
-    <a href="/" data-path="/">Home</a>
-    <a href="/addtask" data-path="/addtask">Add Task</a>
-    <a href="/shop" data-path="/shop">Shop</a>
-    <a href="/profile/page" data-path="/profile/page">Profile</a>
-    <a href="/quiz" data-path="/quiz">Quiz</a>
-  </div>
-  <div class="navRight">
-    <span class="navWallet">💰 <span id="navWalletBalance">0</span></span>
-    <button id="logoutBtn">Logout</button>
-  </div>
+
+    <a href="/" class="navLogo">
+        <span class="navChinese">我</span>
+        <span class="navBrand">MOI</span>
+    </a>
+
+    <div class="navLinks">
+        <a href="/" data-path="/">Home</a>
+        <a href="/addtask" data-path="/addtask">Add Task</a>
+        <a href="/shop" data-path="/shop">Shop</a>
+        <a href="/profile/page" data-path="/profile/page">Profile</a>
+        <a href="/quiz" data-path="/quiz">Quiz</a>
+    </div>
+
+    <div class="navRight">
+        <span class="navWallet">
+            💰 <span id="navWalletBalance">0</span>
+        </span>
+
+        <button id="logoutBtn">Logout</button>
+    </div>
+
 </nav>

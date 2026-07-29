@@ -99,4 +99,28 @@ db.exec(`
       REFERENCES users(id)
   )
 `);
+
+db.exec(`
+  CREATE TABLE IF NOT EXISTS owned_games (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    game_name TEXT NOT NULL,
+    created_at TEXT NOT NULL
+  )
+`);
+
+db.exec(`
+  CREATE TABLE IF NOT EXISTS entertainment_history (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    type TEXT NOT NULL,
+    title TEXT NOT NULL,
+    minutes INTEGER NOT NULL,
+    points INTEGER NOT NULL,
+    watched_at TEXT NOT NULL
+  )
+`);
+
+
+
 module.exports = db;

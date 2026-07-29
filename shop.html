@@ -1,419 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop</title>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:30px;font-family:Arial,sans-serif;background:#f4f4f4}
+.shop{max-width:1000px;margin:auto}
+.topBar{display:flex;justify-content:space-between;align-items:center;padding:20px;background:white;border-radius:15px;margin-bottom:25px}
+.points{font-size:20px;font-weight:bold}.productive{font-size:18px}
+.items{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.item{background:white;padding:20px;border-radius:15px;text-align:center;box-shadow:0 5px 15px rgba(0,0,0,.08)}
+.item img{width:150px;height:120px;object-fit:cover;border-radius:12px;margin-bottom:10px}
+.item h3{margin:8px 0}.item p{margin:5px 0}.owned{font-weight:bold}
+.buyBtn{margin-top:15px;width:100%;padding:12px;border:0;border-radius:10px;background:#222;color:white;font-size:16px;cursor:pointer}
+.buyBtn:hover:not(:disabled){opacity:.8}.buyBtn:disabled{background:#aaa;cursor:not-allowed}
+.history{margin-top:30px;background:white;padding:20px;border-radius:15px}
+table{width:100%;border-collapse:collapse}th,td{padding:12px;border-bottom:1px solid #ddd;text-align:center}
+.entertainment {
+    margin-top: 30px;
+}
 
-    <title>Shop</title>
+.entertainmentHeader {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
 
-    <style>
+.entertainmentHeader h2 {
+    margin: 0 0 8px;
+}
 
-        * {
-            box-sizing: border-box;
-        }
+.entertainmentHeader p {
+    margin: 0;
+}
 
-        body {
-            margin: 0;
-            padding: 30px;
+.entertainmentItems {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
 
-            font-family: Arial, sans-serif;
+.entertainmentCard {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
 
-            background: #f4f4f4;
-        }
+.entertainmentCard h3 {
+    margin-top: 0;
+}
 
-        .shop {
-            max-width: 1000px;
-            margin: auto;
-        }
+.game {
+    padding: 12px 0;
+    border-bottom: 1px solid #ddd;
+}
 
-        /* =========================
-           TOP BAR
-        ========================= */
+.game:last-child {
+    border-bottom: none;
+}
 
-        .topBar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+.gameActions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
 
-            padding: 20px;
+.smallBtn {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
 
-            background: white;
+.deleteBtn {
+    width: 40px;
+    background: #eee;
+}
 
-            border-radius: 15px;
+.historyItem {
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
 
-            margin-bottom: 25px;
-        }
-
-        .points {
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .productive {
-            font-size: 18px;
-        }
-
-
-        /* =========================
-           SHOP ITEMS
-        ========================= */
-
-        .items {
-            display: grid;
-
-            grid-template-columns:
-                repeat(auto-fit, minmax(220px, 1fr));
-
-            gap: 20px;
-        }
-
-        .item {
-            background: white;
-
-            padding: 20px;
-
-            border-radius: 15px;
-
-            text-align: center;
-
-            box-shadow:
-                0 5px 15px rgba(0, 0, 0, 0.08);
-        }
-
-        .item img {
-            width: 150px;
-            height: 120px;
-
-            object-fit: cover;
-
-            border-radius: 12px;
-
-            margin-bottom: 10px;
-        }
-
-        .item h3 {
-            margin: 8px 0;
-        }
-
-        .item p {
-            margin: 5px 0;
-        }
-
-        .owned {
-            font-weight: bold;
-        }
-
-        .buyBtn {
-            margin-top: 15px;
-
-            width: 100%;
-
-            padding: 12px;
-
-            border: none;
-
-            border-radius: 10px;
-
-            background: #222;
-
-            color: white;
-
-            font-size: 16px;
-
-            cursor: pointer;
-        }
-
-        .buyBtn:hover:not(:disabled) {
-            opacity: 0.8;
-        }
-
-        .buyBtn:disabled {
-            background: #aaa;
-
-            cursor: not-allowed;
-        }
-
-
-        /* =========================
-           PURCHASE HISTORY
-        ========================= */
-
-        .history {
-            margin-top: 30px;
-
-            background: white;
-
-            padding: 20px;
-
-            border-radius: 15px;
-        }
-
-        table {
-            width: 100%;
-
-            border-collapse: collapse;
-        }
-
-        th,
-        td {
-            padding: 12px;
-
-            border-bottom: 1px solid #ddd;
-
-            text-align: center;
-        }
-
-        th {
-            text-align: center;
-        }
-
-    </style>
-
+</style>
 </head>
-
 
 <body>
 
-
-    <div id="navPlaceholder"></div>
-    <script src="/nav.js"></script>
-
+<div id="navPlaceholder"></div>
+<script src="/nav.js"></script>
 
 <div class="shop">
 
-
-    <!-- =========================
-         TOP INFORMATION
-    ========================= -->
-
-    <div class="topBar">
-
-        <div class="points">
-
-            💰 Points:
-            <span id="pointDisplay">500</span>
-
-        </div>
-
-
-        <div class="productive">
-
-            💼 Productive time:
-            <strong id="productiveDisplay">
-                24h
-            </strong>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =========================
-         SHOP ITEMS
-    ========================= -->
-
-    <div class="items">
-
-
-        <!-- SLEEP -->
-
-        <div class="item">
-
-            <img
-                src="images/sleep.jpg"
-                alt="Sleep"
-            >
-
-            <h3>😴 Sleep</h3>
-
-            <p>
-                Owned:
-                <span id="sleepOwned">
-                    0
-                </span>
-                / 8 hours
-            </p>
-
-            <p>
-                100 points / hour
-            </p>
-
-            <button
-                class="buyBtn"
-                id="sleepBtn"
-                onclick="buyTime('sleep')"
-            >
-                Buy 1 hour
-            </button>
-
-        </div>
-
-
-
-        <!-- EATING -->
-
-        <div class="item">
-
-            <img
-                src="images/eating.jpg"
-                alt="Eating"
-            >
-
-            <h3>🍽️ Eating</h3>
-
-            <p>
-                Owned:
-                <span id="eatingOwned">
-                    0
-                </span>
-                / 5 hours
-            </p>
-
-            <p>
-                50 points / hour
-            </p>
-
-            <button
-                class="buyBtn"
-                id="eatingBtn"
-                onclick="buyTime('eating')"
-            >
-                Buy 1 hour
-            </button>
-
-        </div>
-
-
-
-        <!-- BATH -->
-
-        <div class="item">
-
-            <img
-                src="images/bath.jpg"
-                alt="Bath"
-            >
-
-            <h3>🚿 Bath</h3>
-
-            <p>
-                Owned:
-                <span id="bathOwned">
-                    0
-                </span>
-                / 1 hour
-            </p>
-
-            <p>
-                50 points / hour
-            </p>
-
-            <button
-                class="buyBtn"
-                id="bathBtn"
-                onclick="buyTime('bath')"
-            >
-                Buy 1 hour
-            </button>
-
-        </div>
-
-
-
-        <!-- TOILET -->
-
-        <div class="item">
-
-            <img
-                src="images/toilet.jpg"
-                alt="Toilet"
-            >
-
-            <h3>🚽 Toilet</h3>
-
-            <p>
-                Owned:
-                <span id="toiletOwned">
-                    0
-                </span>
-                / 1 hour
-            </p>
-
-            <p>
-                50 points / hour
-            </p>
-
-            <button
-                class="buyBtn"
-                id="toiletBtn"
-                onclick="buyTime('toilet')"
-            >
-                Buy 1 hour
-            </button>
-
-        </div>
-
-
-    </div>
-
-
-
-    <!-- =========================
-         PURCHASE HISTORY
-    ========================= -->
-
-    <div class="history">
-
-        <h2>Purchased Time</h2>
-
-        <table>
-
-            <thead>
-
-                <tr>
-
-                    <th>
-                        Activity
-                    </th>
-
-                    <th>
-                        Hours
-                    </th>
-
-                    <th>
-                        Points
-                    </th>
-
-                </tr>
-
-            </thead>
-
-
-            <tbody id="purchaseTable">
-
-            </tbody>
-
-        </table>
-
-    </div>
-
+<div class="topBar">
+<div class="points">💰 Points: <span id="pointDisplay">500</span></div>
+<div class="productive">💼 Productive time: <strong id="productiveDisplay">24h</strong></div>
+</div>
+
+<div class="items">
+
+<div class="item">
+<img src="images/sleep.jpg" alt="Sleep">
+<h3>😴 Sleep</h3>
+<p>Owned: <span id="sleepOwned">0</span> / 8 hours</p>
+<p>30 points / hour</p>
+<button class="buyBtn" id="sleepBtn" onclick="buyTime('sleep')">Buy 1 hour</button>
+</div>
+
+<div class="item">
+<img src="images/eating.jpg" alt="Eating">
+<h3>🍽️ Eating</h3>
+<p>Owned: <span id="eatingOwned">0</span> / 5 hours</p>
+<p>20 points / hour</p>
+<button class="buyBtn" id="eatingBtn" onclick="buyTime('eating')">Buy 1 hour</button>
+</div>
+
+<div class="item">
+<img src="images/bath.jpg" alt="Bath">
+<h3>🚿 Bath</h3>
+<p>Owned: <span id="bathOwned">0</span> / 1 hour</p>
+<p>15 points / 30 minutes </p>
+<button class="buyBtn" id="bathBtn" onclick="buyTime('bath')">Buy 1 hour</button>
+</div>
+
+<div class="item">
+<img src="images/toilet.jpg" alt="Toilet">
+<h3>🚽 Toilet</h3>
+<p>Owned: <span id="toiletOwned">0</span> / 1 hour</p>
+<p>15 points / 30 minutes </p>
+<button class="buyBtn" id="toiletBtn" onclick="buyTime('toilet')">Buy 1 hour</button>
+</div>
 
 </div>
 
+// entertainment//
 
+<div class="entertainment">
+
+    <div class="entertainmentHeader">
+        <h2>🎭 Entertainment</h2>
+        <p>
+            Today:
+            <strong id="entertainmentToday">0h</strong>
+            / 4h
+        </p>
+    </div>
+
+    <div class="entertainmentItems">
+
+        <!-- GAMES -->
+        <div class="entertainmentCard">
+
+            <h3>🎮 Games</h3>
+
+            <div id="gamesList"></div>
+
+            <button class="buyBtn" onclick="addGame()">
+                + Add Game
+            </button>
+
+        </div>
+
+
+        <!-- MOVIES -->
+        <div class="entertainmentCard">
+
+            <h3>🎬 Movies</h3>
+
+            <button class="buyBtn" onclick="buyMovie()">
+                Watch Movie
+            </button>
+
+            <div id="movieHistory"></div>
+
+        </div>
+
+
+        <!-- ANIME -->
+        <div class="entertainmentCard">
+
+            <h3>📺 Anime</h3>
+
+            <button class="buyBtn" onclick="buyAnime()">
+                Watch Anime
+            </button>
+
+            <div id="animeHistory"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+//history
+
+<div class="history">
+<h2>Purchased Time</h2>
+<table>
+<thead><tr><th>Activity</th><th>Hours</th><th>Points</th></tr></thead>
+<tbody id="purchaseTable"></tbody>
+</table>
+</div>
+
+</div>
 
 <script>
 let userPoints = 0;
 let profile = {};
+let games = [];
+let history = [];
+let entertainmentToday = 0;
 
 const itemMeta = {
-  sleep: { name: "😴 Sleep", maxHours: 8, price: 100, column: "sleep_hours" },
-  eating: { name: "🍽️ Eating", maxHours: 5, price: 50, column: "eating_hours" },
-  bath: { name: "🚿 Bath", maxHours: 1, price: 50, column: "bath_hours" },
-  toilet: { name: "🚽 Toilet", maxHours: 1, price: 50, column: "toilet_hours" }
+  sleep: { name: "😴 Sleep", maxHours: 8, price: 30, amount: 1, column: "sleep_hours" },
+  eating: { name: "🍽️ Eating", maxHours: 5, price: 20, amount: 1, column: "eating_hours" },
+  bath: { name: "🚿 Bath", maxHours: 1, price: 15, amount: 0.5, column: "bath_hours" },
+  toilet: { name: "🚽 Toilet", maxHours: 1, price: 15, amount: 0.5, column: "toilet_hours" }
 };
 
 function loadShopData() {
@@ -422,7 +232,12 @@ function loadShopData() {
     .then(data => {
       userPoints = data.wallet.balance;
       profile = data.profile;
+      games = data.games || [];
+      history = data.history || [];
+      entertainmentToday = data.entertainmentToday || 0;
+
       updateShop();
+      updateEntertainment();
     });
 }
 
@@ -438,17 +253,21 @@ function buyTime(itemId) {
         alert(data.error);
         return;
       }
+
       userPoints = data.wallet.balance;
       profile = data.profile;
+
       updateShop();
     });
 }
 
 function getProductiveHours() {
   let allocatedHours = 0;
+
   for (const meta of Object.values(itemMeta)) {
     allocatedHours += profile[meta.column] || 0;
   }
+
   return 24 - allocatedHours;
 }
 
@@ -460,12 +279,12 @@ function updateShop() {
   document.getElementById("bathOwned").textContent = profile.bath_hours || 0;
   document.getElementById("toiletOwned").textContent = profile.toilet_hours || 0;
 
-  document.getElementById("productiveDisplay").textContent = getProductiveHours() + "h";
+  document.getElementById("productiveDisplay").textContent =
+    getProductiveHours() + "h";
 
-  updateButton("sleepBtn", itemMeta.sleep);
-  updateButton("eatingBtn", itemMeta.eating);
-  updateButton("bathBtn", itemMeta.bath);
-  updateButton("toiletBtn", itemMeta.toilet);
+  for (const [key, meta] of Object.entries(itemMeta)) {
+    updateButton(key + "Btn", meta);
+  }
 
   updatePurchaseTable();
 }
@@ -474,7 +293,7 @@ function updateButton(buttonId, meta) {
   const button = document.getElementById(buttonId);
   const owned = profile[meta.column] || 0;
 
-  if (owned >= meta.maxHours) {
+  if (owned + meta.amount > meta.maxHours) {
     button.disabled = true;
     button.textContent = "✓ Maximum reached";
     return;
@@ -487,27 +306,329 @@ function updateButton(buttonId, meta) {
   }
 
   button.disabled = false;
-  button.textContent = "Buy 1 hour";
+
+  button.textContent =
+    meta.amount === 0.5
+      ? "Buy 30 minutes"
+      : "Buy 1 hour";
 }
 
 function updatePurchaseTable() {
   const table = document.getElementById("purchaseTable");
   table.innerHTML = "";
 
-  for (const [key, meta] of Object.entries(itemMeta)) {
+  for (const meta of Object.values(itemMeta)) {
     const owned = profile[meta.column] || 0;
+
     if (owned === 0) continue;
 
     const row = document.createElement("tr");
-    row.innerHTML = `<td>${meta.name}</td><td>${owned}h</td><td>${owned * meta.price} pts</td>`;
+
+    row.innerHTML = `
+      <td>${meta.name}</td>
+      <td>${owned}h</td>
+      <td>${owned * meta.price} pts</td>
+    `;
+
     table.appendChild(row);
   }
 }
+
+
+/* =========================
+   ENTERTAINMENT
+========================= */
+
+function updateEntertainment() {
+  const hours = Math.floor(entertainmentToday / 60);
+  const minutes = entertainmentToday % 60;
+
+  let display = "";
+
+  if (hours > 0) {
+    display += hours + "h ";
+  }
+
+  if (minutes > 0) {
+    display += minutes + "m";
+  }
+
+  if (!display) {
+    display = "0h";
+  }
+
+  document.getElementById("entertainmentToday").textContent = display;
+
+  renderGames();
+  renderHistory();
+}
+
+
+/* =========================
+   GAMES
+========================= */
+
+function renderGames() {
+  const container = document.getElementById("gamesList");
+
+  container.innerHTML = "";
+
+  if (games.length === 0) {
+    container.innerHTML = "<p>No games yet.</p>";
+    return;
+  }
+
+  games.forEach(game => {
+    const div = document.createElement("div");
+
+    div.className = "game";
+
+    div.innerHTML = `
+      <strong>🎮 ${escapeHTML(game.game_name)}</strong>
+
+      <div class="gameActions">
+
+        <button
+          class="smallBtn"
+          onclick="playGame(${game.id})"
+        >
+          30 min · 10 pts
+        </button>
+
+        <button
+          class="smallBtn deleteBtn"
+          onclick="deleteGame(${game.id})"
+        >
+          🗑️
+        </button>
+
+      </div>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+function addGame() {
+  if (games.length >= 3) {
+    alert("You can only own 3 games. Delete one first.");
+    return;
+  }
+
+  const name = prompt("What game do you want to buy?");
+
+  if (!name || !name.trim()) {
+    return;
+  }
+
+  fetch("/shop/buy-game", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      name: name.trim()
+    })
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
+
+      userPoints = data.wallet.balance;
+      games = data.games;
+
+      updateShop();
+      updateEntertainment();
+    });
+}
+
+function deleteGame(id) {
+  if (!confirm("Delete this game? You won't get your points back.")) {
+    return;
+  }
+
+  fetch("/shop/delete-game", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ id })
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
+
+      games = data.games;
+
+      updateEntertainment();
+    });
+}
+
+function playGame(gameId) {
+  buyEntertainment("game", "", 30, gameId);
+}
+
+
+/* =========================
+   MOVIE
+========================= */
+
+function buyMovie() {
+  const title = prompt("What movie are you watching?");
+
+  if (!title || !title.trim()) {
+    return;
+  }
+
+  const hours = prompt("How many hours?");
+
+  if (!hours || isNaN(hours) || Number(hours) <= 0) {
+    alert("Enter a valid number of hours.");
+    return;
+  }
+
+  const minutes = Math.round(Number(hours) * 60);
+
+  buyEntertainment("movie", title.trim(), minutes);
+}
+
+
+/* =========================
+   ANIME
+========================= */
+
+function buyAnime() {
+  const title = prompt("What anime are you watching?");
+
+  if (!title || !title.trim()) {
+    return;
+  }
+
+  const hours = prompt("How many hours?");
+
+  if (!hours || isNaN(hours) || Number(hours) <= 0) {
+    alert("Enter a valid number of hours.");
+    return;
+  }
+
+  const minutes = Math.round(Number(hours) * 60);
+
+  buyEntertainment("anime", title.trim(), minutes);
+}
+
+
+/* =========================
+   BUY ENTERTAINMENT
+========================= */
+
+function buyEntertainment(type, title, minutes, gameId = null) {
+  if (entertainmentToday + minutes > 240) {
+    const remaining = 240 - entertainmentToday;
+
+    alert(
+      `You only have ${remaining} minutes of entertainment left today.`
+    );
+
+    return;
+  }
+
+  fetch("/shop/buy-entertainment", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      type,
+      title,
+      minutes,
+      gameId
+    })
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
+
+      userPoints = data.wallet.balance;
+      history = data.history;
+      entertainmentToday = data.entertainmentToday;
+
+      updateShop();
+      updateEntertainment();
+    });
+}
+
+
+/* =========================
+   HISTORY
+========================= */
+
+function renderHistory() {
+  const movieBox = document.getElementById("movieHistory");
+  const animeBox = document.getElementById("animeHistory");
+
+  movieBox.innerHTML = "";
+  animeBox.innerHTML = "";
+
+  const movies = history.filter(item => item.type === "movie");
+  const anime = history.filter(item => item.type === "anime");
+
+  movies.forEach(item => {
+    movieBox.innerHTML += `
+      <div class="historyItem">
+        🎬 ${escapeHTML(item.title)}
+        — ${formatMinutes(item.minutes)}
+      </div>
+    `;
+  });
+
+  anime.forEach(item => {
+    animeBox.innerHTML += `
+      <div class="historyItem">
+        📺 ${escapeHTML(item.title)}
+        — ${formatMinutes(item.minutes)}
+      </div>
+    `;
+  });
+}
+
+function formatMinutes(minutes) {
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+
+  if (hours && mins) {
+    return `${hours}h ${mins}m`;
+  }
+
+  if (hours) {
+    return `${hours}h`;
+  }
+
+  return `${mins}m`;
+}
+
+
+/* =========================
+   SAFETY
+========================= */
+
+function escapeHTML(text) {
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
+}
+
 
 loadShopData();
 </script>
 
 </body>
-
 </html>
-

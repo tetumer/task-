@@ -38,7 +38,7 @@ router.post("/register", express.json(), async (req, res) => {
       .run(name, username, hashedPassword);
 
     const newUserId = result.lastInsertRowid;
-    db.prepare("INSERT INTO wallet (user_id, balance) VALUES (?, ?)").run(newUserId, 0);
+    db.prepare("INSERT INTO wallet (user_id, balance) VALUES (?, ?)").run(newUserId, 500);
     req.session.userId = newUserId;
     res.json({ success: true });
   } catch (err) {

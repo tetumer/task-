@@ -5,22 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add Task</title>
     <style>
-      :root {
-        --bg: #12101c;
-        --bg-soft: #1b1830;
-        --violet: #8b5cf6;
-        --cyan: #22d3ee;
-        --text: #f0ede4;
-        --muted: #8a8594;
-        --line: #2c2844;
-      }
+:root {
+    --bg: #24213a;
+    --bg-soft: #302c4a;
+
+    --violet: #9b7cf5;
+    --cyan: #4dd9e8;
+
+    --text: #f4f1e8;
+    --muted: #b0abba;
+
+    --line: #46415f;
+
+    --green: #4ade9a;
+}
 
       * { box-sizing: border-box; }
 
       body {
         margin: 0;
         min-height: 100vh;
-        background: radial-gradient(circle at 50% 0%, #201c3a 0%, var(--bg) 55%);
+        background:
+        radial-gradient(
+            circle at 50% 0%,
+            #39335b 0%,
+            var(--bg) 60%
+        );
         color: var(--text);
         font-family: 'Segoe UI', system-ui, sans-serif;
         padding-bottom: 60px;
