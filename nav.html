@@ -1,10 +1,14 @@
 <nav class="mainNav">
   <a href="/" class="navLogo">✦ App</a>
   <div class="navLinks">
-    <a href="/">Home</a>
-    <a href="/addtask">Add Task</a>
-    <a href="/shop">Shop</a>
-    <a href="/profile/page">Profile</a>
-    <a href="/quiz">Quiz</a>
+    <a href="/" data-path="/">Home</a>
+    <a href="/addtask" data-path="/addtask">Add Task</a>
+    <a href="/shop" data-path="/shop">Shop</a>
+    <a href="/profile/page" data-path="/profile/page">Profile</a>
+    <a href="/quiz" data-path="/quiz">Quiz</a>
+  </div>
+  <div class="navRight">
+    <span class="navWallet">💰 <span id="navWalletBalance">0</span></span>
+    <button id="logoutBtn">Logout</button>
   </div>
 </nav>

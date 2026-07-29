@@ -29,6 +29,7 @@ app.use("/shop", shopRoutes);
 const profileRoutes = require("./routes/profile");
 app.use("/profile", profileRoutes);
 
+app.use(express.static(__dirname));
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/home.html");

@@ -1,64 +1,207 @@
 <!doctype html>
 <html>
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add Task</title>
+    <style>
+      :root {
+        --bg: #12101c;
+        --bg-soft: #1b1830;
+        --violet: #8b5cf6;
+        --cyan: #22d3ee;
+        --text: #f0ede4;
+        --muted: #8a8594;
+        --line: #2c2844;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: radial-gradient(circle at 50% 0%, #201c3a 0%, var(--bg) 55%);
+        color: var(--text);
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        padding-bottom: 60px;
+      }
+
+      .formWrap {
+        max-width: 480px;
+        margin: 32px auto 0;
+        padding: 0 20px;
+      }
+
+      h1 {
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: 28px;
+        margin: 0 0 28px;
+      }
+
+      label {
+        display: block;
+        font-size: 13px;
+        color: var(--muted);
+        margin: 18px 0 6px;
+      }
+
+      input[type="text"],
+      input[type="number"],
+      input[type="datetime-local"],
+      select {
+        width: 100%;
+        padding: 13px 14px;
+        border-radius: 10px;
+        border: 1px solid var(--line);
+        background: var(--bg-soft);
+        color: var(--text);
+        font-size: 15px;
+        outline: none;
+        font-family: inherit;
+      }
+
+      input:focus, select:focus {
+        border-color: var(--cyan);
+      }
+
+      #titleInput {
+        margin-top: 4px;
+      }
+
+      #stepsSection {
+        margin-top: 20px;
+        padding: 18px;
+        background: var(--bg-soft);
+        border-radius: 12px;
+        border: 1px solid var(--line);
+      }
+
+      #stepsSection h3 {
+        margin: 0 0 12px;
+        font-size: 15px;
+        color: var(--muted);
+        font-weight: 600;
+      }
+
+      #stepsSection input {
+        margin-bottom: 10px;
+      }
+
+      #addStepBtn {
+        background: transparent;
+        border: 1px solid var(--violet);
+        color: var(--violet);
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-size: 14px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      #addStepBtn:hover {
+        background: rgba(139, 92, 246, 0.1);
+      }
+
+      #stepsList {
+        list-style: none;
+        padding: 0;
+        margin: 14px 0 0;
+      }
+
+      #stepsList li {
+        padding: 10px 12px;
+        background: var(--bg);
+        border-radius: 8px;
+        margin-bottom: 8px;
+        font-size: 14px;
+        color: var(--text);
+      }
+
+      #saveTaskBtn {
+        width: 100%;
+        margin-top: 28px;
+        background: linear-gradient(90deg, var(--violet), var(--cyan));
+        border: none;
+        color: #0f0d1a;
+        font-weight: 700;
+        padding: 15px;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: opacity 0.2s ease;
+      }
+
+      #saveTaskBtn:hover {
+        opacity: 0.9;
+      }
+    </style>
   </head>
   <body>
-    <h1>Add a task</h1>
 
-    <input type="text" id="titleInput" placeholder="Task title" />
+    <div id="navPlaceholder"></div>
+    <script src="/nav.js"></script>
 
-    <select id="typeInput">
-      <option value="">-- Select type --</option>
-      <option value="study">Study</option>
-      <option value="chores">Chores</option>
-      <option value="personal">Personal</option>
-      <option value="work">Work</option>
-      <option value="other">Other</option>
-    </select>
+    <div class="formWrap">
+      <h1>Add a task</h1>
 
-    <select id="subjectInput" style="display:none;">
-      <option value="">-- Select subject --</option>
-      <option value="math">Math</option>
-      <option value="physics">Physics</option>
-      <option value="chemistry">Chemistry</option>
-      <option value="biology">Biology</option>
-      <option value="english">English</option>
-      <option value="bangla">Bangla</option>
-      <option value="programming">Programming</option>
-      <option value="economics">Economics</option>
-      <option value="history">History</option>
-      <option value="ict">ICT</option>
-    </select>
+      <label for="titleInput">Task title</label>
+      <input type="text" id="titleInput" placeholder="What needs doing?" />
 
-    <select id="difficultyInput">
-      <option value="instant">Instant</option>
-      <option value="easy">Easy</option>
-      <option value="medium">Medium</option>
-      <option value="hard">Hard</option>
-    </select>
+      <label for="typeInput">Type</label>
+      <select id="typeInput">
+        <option value="">-- Select type --</option>
+        <option value="study">Study</option>
+        <option value="chores">Chores</option>
+        <option value="personal">Personal</option>
+        <option value="work">Work</option>
+        <option value="other">Other</option>
+      </select>
 
-    <label>Deadline: <input type="datetime-local" id="deadlineInput" /></label>
+      <select id="subjectInput" style="display:none;">
+        <option value="">-- Select subject --</option>
+        <option value="math">Math</option>
+        <option value="physics">Physics</option>
+        <option value="chemistry">Chemistry</option>
+        <option value="biology">Biology</option>
+        <option value="english">English</option>
+        <option value="bangla">Bangla</option>
+        <option value="programming">Programming</option>
+        <option value="economics">Economics</option>
+        <option value="history">History</option>
+        <option value="ict">ICT</option>
+      </select>
 
-    <label>Duration (minutes): <input type="number" id="durationInput" placeholder="e.g. 120" min="1" /></label>
-    
-    <div id="stepsSection" style="display:none;">
-      <h3>Steps (for hard tasks)</h3>
-      <input type="text" id="stepInput" placeholder="Step description" />
-      <button id="addStepBtn">Add step</button>
-      <ul id="stepsList"></ul>
+      <label for="difficultyInput">Difficulty</label>
+      <select id="difficultyInput">
+        <option value="instant">Instant</option>
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+
+      <label for="deadlineInput">Deadline</label>
+      <input type="datetime-local" id="deadlineInput" />
+
+      <label for="durationInput">Duration (minutes)</label>
+      <input type="number" id="durationInput" placeholder="e.g. 120" min="1" />
+
+      <div id="stepsSection" style="display:none;">
+        <h3>Steps (for hard tasks)</h3>
+        <input type="text" id="stepInput" placeholder="Step description" />
+        <button id="addStepBtn">+ Add step</button>
+        <ul id="stepsList"></ul>
+      </div>
+
+      <button id="saveTaskBtn">Save task</button>
     </div>
 
-    <button id="saveTaskBtn">Save task</button>
-
     <script>
-
       const maxMinutesByDifficulty = {
-          instant: 30,
-          easy: 120,
-          medium: 480,
-          hard: 1440
-        };
+        instant: 30,
+        easy: 120,
+        medium: 480,
+        hard: 1440
+      };
       let steps = [];
 
       document.getElementById("typeInput").addEventListener("change", (e) => {
@@ -106,14 +249,14 @@
         };
 
         const duration = Number(document.getElementById("durationInput").value);
-          const maxAllowed = maxMinutesByDifficulty[difficulty];
+        const maxAllowed = maxMinutesByDifficulty[difficulty];
 
-          if (duration > maxAllowed) {
-            alert(`That's too long for a ${difficulty} task. Max is ${maxAllowed} minutes.`);
-            return; 
+        if (duration > maxAllowed) {
+          alert(`That's too long for a ${difficulty} task. Max is ${maxAllowed} minutes.`);
+          return;
         }
 
-       fetch("/tasks", {
+        fetch("/tasks", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(task)
@@ -121,7 +264,7 @@
           .then(response => response.json())
           .then(() => {
             window.location.href = "/";
-        });
+          });
       });
     </script>
   </body>

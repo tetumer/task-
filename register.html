@@ -13,24 +13,24 @@
         document.getElementById("registerBtn").addEventListener("click", () => {
             const newUser = {
                   name: document.getElementById("nameInput").value,
-                        username: document.getElementById("usernameInput").value,
-                              password: document.getElementById("passwordInput").value
-                                  };
+                  username: document.getElementById("usernameInput").value,
+                  password: document.getElementById("passwordInput").value
+            };
 
-                                      fetch("/register", {
-                                            method: "POST",
-                                                  headers: { "Content-Type": "application/json" },
-                                                        body: JSON.stringify(newUser)
-                                                            })
-                                                                  .then(response => response.json())
-                                                                        .then(data => {
-                                                                                if (data.success) {
-                                                                                          alert("Registered successfully!");
-                                                                                                  } else {
-                                                                                                            alert(data.error);
-                                                                                                                    }
-                                                                                                                          });
-                                                                                                                            });
+      fetch("/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newUser)
+      })
+                    .then(response => response.json())
+                    .then(data => {
+                          if (data.success) {
+                                window.location.href = "/";
+                          } else {
+                                alert(data.error);
+                          }
+                    });
+        });
                                                                                                                             </script>
     </body>
 </html>

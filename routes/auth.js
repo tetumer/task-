@@ -5,7 +5,7 @@ const db = require("../db");
 const path = require("path");
 
 router.get("/register", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "register.html"));
+  res.redirect("/quiz");
 });
 
 router.get("/login", (req, res) => {
@@ -39,11 +39,18 @@ router.post("/register", express.json(), async (req, res) => {
 
     const newUserId = result.lastInsertRowid;
     db.prepare("INSERT INTO wallet (user_id, balance) VALUES (?, ?)").run(newUserId, 0);
-
+    req.session.userId = newUserId;
     res.json({ success: true });
   } catch (err) {
     res.status(400).json({ error: "Username already taken" });
   }
 });
+
+
+    router.post("/logout", (req, res) => {
+      req.session.destroy(() => {
+        res.json({ success: true });
+      });
+    });
 
 module.exports = router;

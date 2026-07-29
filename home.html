@@ -1,107 +1,219 @@
 <!doctype html>
 <html>
   <head>
-    <title>home</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <style>
+      :root {
+        --bg: #12101c;
+        --bg-soft: #1b1830;
+        --violet: #8b5cf6;
+        --cyan: #22d3ee;
+        --text: #f0ede4;
+        --muted: #8a8594;
+        --line: #2c2844;
+        --green: #34d399;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: radial-gradient(circle at 50% 0%, #201c3a 0%, var(--bg) 55%);
+        color: var(--text);
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        padding-bottom: 60px;
+      }
+
+      .wrap {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .topRow {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 32px 0 24px;
+      }
+
+      h1 {
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: 26px;
+        margin: 0;
+      }
+
+      .walletPill {
+        background: var(--bg-soft);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 10px 18px;
+        font-weight: 700;
+        color: #f2b84b;
+        font-size: 15px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 10px;
+      }
+
+      #task_table tr:first-child {
+        display: none; /* hides raw header row from JS-built table if present */
+      }
+
+      #task_table td {
+        background: var(--bg-soft);
+        padding: 14px 16px;
+        border: 1px solid var(--line);
+        font-size: 14px;
+      }
+
+      #task_table td:first-child {
+        border-radius: 12px 0 0 12px;
+        border-right: none;
+        font-weight: 600;
+      }
+
+      #task_table td:last-child {
+        border-radius: 0 12px 12px 0;
+        border-left: none;
+      }
+
+      button {
+        background: linear-gradient(90deg, var(--violet), var(--cyan));
+        border: none;
+        color: #0f0d1a;
+        font-weight: 700;
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-size: 13px;
+        cursor: pointer;
+        margin-right: 6px;
+      }
+
+      button:hover {
+        opacity: 0.9;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      ul li {
+        font-size: 13px;
+        padding: 6px 0;
+        color: var(--muted);
+      }
+    </style>
   </head>
   <body>
-    <h1>Here are the Tasks</h1>
-    <p>Wallet: <span id="walletBalance">0</span> points</p>
-    <table border="1" id="task_table">
-      <tr>
-        <th>Task name</th>
-        <th>Priority</th>
-        <th>Point</th>
-        <th></th>
-        <th></th>
-      </tr>
-    </table>
-    <a href="/addtask">Add a task</a>
+
+    <div id="navPlaceholder"></div>
+    <script src="/nav.js"></script>
+
+    <div class="wrap">
+      <div class="topRow">
+        <h1>Your Tasks</h1>
+        <div class="walletPill">💰 <span id="walletBalance">0</span></div>
+      </div>
+
+      <table id="task_table">
+        <tr><th>Title</th><th>Category</th><th>Difficulty</th><th>Status</th><th>Points</th><th></th></tr>
+      </table>
+    </div>
+
     <script>
-        fetch("/tasks")
-  .then(response => response.json())
-  .then(data => {
-    if (data.error) {
-      window.location.href = "/login";
-      return;
-    }
-    const table = document.getElementById("task_table");
-data.filter(task => task.status === "pending").forEach((task) => {
-  const row = document.createElement("tr");
+      fetch("/tasks")
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            window.location.href = "/login";
+            return;
+          }
+          const table = document.getElementById("task_table");
 
-      if (task.difficulty === "hard") {
-        let stepsHtml = "<ul>";
-        task.steps.forEach(step => {
-          const checkbox = step.completed
-            ? "✅"
-            : `<button onclick="completeStep(${task.id}, ${step.id})">Complete</button>`;
-          stepsHtml += `<li>${step.step_text} (${step.step_points} pts) ${checkbox}</li>`;
+          data.filter(task => task.status === "pending").forEach((task) => {
+            const row = document.createElement("tr");
+
+            if (task.difficulty === "hard") {
+              let stepsHtml = "<ul>";
+              task.steps.forEach(step => {
+                const checkbox = step.completed
+                  ? "✅"
+                  : `<button onclick="completeStep(${task.id}, ${step.id})">Complete</button>`;
+                stepsHtml += `<li>${step.step_text} (${step.step_points} pts) ${checkbox}</li>`;
+              });
+              stepsHtml += "</ul>";
+
+              row.innerHTML = `
+                <td>${task.title}</td>
+                <td>${task.category}</td>
+                <td>${task.difficulty}</td>
+                <td>${task.status}</td>
+                <td>${task.points}</td>
+                <td>${stepsHtml}</td>
+              `;
+            } else {
+              row.innerHTML = `
+                <td>${task.title}</td>
+                <td>${task.category}</td>
+                <td>${task.difficulty}</td>
+                <td>${task.status}</td>
+                <td>${task.points}</td>
+                <td>
+                  <button onclick="completeTask(${task.id})">Complete</button>
+                  <button onclick="deleteTask(${task.id})">Delete</button>
+                </td>
+              `;
+            }
+
+            table.appendChild(row);
+          });
         });
-        stepsHtml += "</ul>";
 
-        row.innerHTML = `
-          <td>${task.title}</td>
-          <td>${task.category}</td>
-          <td>${task.difficulty}</td>
-          <td>${task.status}</td>
-          <td>${task.points}</td>
-          <td>${stepsHtml}</td>
-        `;
-      } else {
-        row.innerHTML = `
-          <td>${task.title}</td>
-          <td>${task.category}</td>
-          <td>${task.difficulty}</td>
-          <td>${task.status}</td>
-          <td>${task.points}</td>
-          <td>
-            <button onclick="completeTask(${task.id})">Complete</button>
-            <button onclick="deleteTask(${task.id})">Delete</button>
-          </td>
-        `;
+      fetch("/wallet")
+        .then(response => response.json())
+        .then(wallet => {
+          document.getElementById("walletBalance").textContent = wallet.balance;
+        });
+
+      function completeTask(id) {
+        const actualMinutes = prompt("How long did this actually take (minutes)?");
+        if (actualMinutes === null) return;
+
+        fetch(`/tasks/${id}/complete`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ actual_minutes: Number(actualMinutes) })
+        })
+          .then(response => response.json())
+          .then(() => {
+            window.location.reload();
+          });
       }
-    table.appendChild(row);
-});
 
-      
-   
-  });
+      function completeStep(taskId, stepId) {
+        fetch(`/tasks/${taskId}/steps/${stepId}/complete`, { method: "POST" })
+          .then(response => response.json())
+          .then(() => {
+            window.location.reload();
+          });
+      }
 
-fetch("/wallet")
-  .then(response => response.json())
-  .then(wallet => {
-    document.getElementById("walletBalance").textContent = wallet.balance;
-  });
-
-function completeTask(id) {
-  const actualMinutes = prompt("How long did this actually take (minutes)?");
-  if (actualMinutes === null) return;
-
-  fetch(`/tasks/${id}/complete`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ actual_minutes: Number(actualMinutes) })
-  })
-    .then(response => response.json())
-    .then(() => {
-      window.location.reload();
-    });
-}
-
-function completeStep(taskId, stepId) {
-  fetch(`/tasks/${taskId}/steps/${stepId}/complete`, { method: "POST" })
-    .then(response => response.json())
-    .then(() => {
-      window.location.reload();
-    });
-}
-
-function deleteTask(id) {
-  fetch(`/tasks/${id}`, { method: "DELETE" })
-    .then((response) => response.json())
-    .then(() => {
-      window.location.reload();
-    });
-}
+      function deleteTask(id) {
+        fetch(`/tasks/${id}`, { method: "DELETE" })
+          .then((response) => response.json())
+          .then(() => {
+            window.location.reload();
+          });
+      }
     </script>
   </body>
 </html>

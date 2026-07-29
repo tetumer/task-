@@ -7,6 +7,12 @@ const { getProfileScores } = require("../pointFormulas");
 router.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "quiz.html"));
 });
+router.get("/", (req, res) => {
+  if (req.session.userId) {
+    return res.redirect("/");
+  }
+  res.sendFile(path.join(__dirname, "..", "quiz.html"));
+});
 
 router.post("/submit", express.json(), (req, res) => {
   if (!req.session.userId) {
