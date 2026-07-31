@@ -2,32 +2,144 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
-router.get("/", (req, res) => {
-  if (!req.session.userId) {
-    return res.status(401).json({ error: "Not logged in" });
+
+// =========================
+// GET WALLET
+// =========================
+
+router.get("/", async (req, res) => {
+  try {
+    if (!req.session.userId) {
+      return res.status(401).json({
+        error: "Not logged in"
+      });
+    }
+
+    const result = await db.execute({
+      sql: `
+        SELECT *
+        FROM wallet
+        WHERE user_id = ?
+      `,
+      args: [req.session.userId]
+    });
+
+    res.json(result.rows[0] || null);
+
+  } catch (err) {
+    console.error("GET WALLET ERROR:", err);
+
+    res.status(500).json({
+      error: "Failed to load wallet"
+    });
   }
-  const wallet = db.prepare("SELECT * FROM wallet WHERE user_id = ?").get(req.session.userId);
-  res.json(wallet);
 });
 
-router.post("/add", express.json(), (req, res) => {
-  if (!req.session.userId) {
-    return res.status(401).json({ error: "YOU NEED TO LOGIN FIRST" });
+
+// =========================
+// ADD POINTS
+// =========================
+
+router.post("/add", express.json(), async (req, res) => {
+  try {
+    if (!req.session.userId) {
+      return res.status(401).json({
+        error: "YOU NEED TO LOGIN FIRST"
+      });
+    }
+
+    const { amount } = req.body;
+
+    if (!Number.isFinite(Number(amount))) {
+      return res.status(400).json({
+        error: "Invalid amount"
+      });
+    }
+
+    await db.execute({
+      sql: `
+        UPDATE wallet
+        SET balance = balance + ?
+        WHERE user_id = ?
+      `,
+      args: [
+        Number(amount),
+        req.session.userId
+      ]
+    });
+
+    const result = await db.execute({
+      sql: `
+        SELECT *
+        FROM wallet
+        WHERE user_id = ?
+      `,
+      args: [req.session.userId]
+    });
+
+    res.json(result.rows[0] || null);
+
+  } catch (err) {
+    console.error("ADD WALLET ERROR:", err);
+
+    res.status(500).json({
+      error: "Failed to add points"
+    });
   }
-  const { amount } = req.body;
-  db.prepare("UPDATE wallet SET balance = balance + ? WHERE user_id = ?").run(amount, req.session.userId);
-  const wallet = db.prepare("SELECT * FROM wallet WHERE user_id = ?").get(req.session.userId);
-  res.json(wallet);
 });
 
-router.post("/subtract", express.json(), (req, res) => {
-  if (!req.session.userId) {
-    return res.status(401).json({ error: "YOU NEED TO LOGIN FIRST" });
+
+// =========================
+// SUBTRACT POINTS
+// =========================
+
+router.post("/subtract", express.json(), async (req, res) => {
+  try {
+    if (!req.session.userId) {
+      return res.status(401).json({
+        error: "YOU NEED TO LOGIN FIRST"
+      });
+    }
+
+    const { amount } = req.body;
+
+    if (!Number.isFinite(Number(amount))) {
+      return res.status(400).json({
+        error: "Invalid amount"
+      });
+    }
+
+    await db.execute({
+      sql: `
+        UPDATE wallet
+        SET balance = balance - ?
+        WHERE user_id = ?
+      `,
+      args: [
+        Number(amount),
+        req.session.userId
+      ]
+    });
+
+    const result = await db.execute({
+      sql: `
+        SELECT *
+        FROM wallet
+        WHERE user_id = ?
+      `,
+      args: [req.session.userId]
+    });
+
+    res.json(result.rows[0] || null);
+
+  } catch (err) {
+    console.error("SUBTRACT WALLET ERROR:", err);
+
+    res.status(500).json({
+      error: "Failed to subtract points"
+    });
   }
-  const { amount } = req.body;
-  db.prepare("UPDATE wallet SET balance = balance - ? WHERE user_id = ?").run(amount, req.session.userId);
-  const wallet = db.prepare("SELECT * FROM wallet WHERE user_id = ?").get(req.session.userId);
-  res.json(wallet);
 });
+
 
 module.exports = router;

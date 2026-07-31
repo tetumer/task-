@@ -4,53 +4,135 @@ const bcrypt = require("bcrypt");
 const db = require("../db");
 const path = require("path");
 
+
+// =========================
+// REGISTER PAGE
+// =========================
+
 router.get("/register", (req, res) => {
   res.redirect("/quiz");
 });
+
+
+// =========================
+// LOGIN PAGE
+// =========================
 
 router.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "login.html"));
 });
 
+
+// =========================
+// LOGIN
+// =========================
+
 router.post("/login", express.json(), async (req, res) => {
-  const { username, password } = req.body;
-  const user = db.prepare("SELECT * FROM users WHERE username = ?").get(username);
+  try {
+    const { username, password } = req.body;
 
-  if (!user) {
-    return res.status(401).json({ error: "YOU NEED TO REGISTER FIRST" });
+    const result = await db.execute({
+      sql: "SELECT * FROM users WHERE username = ?",
+      args: [username]
+    });
+
+    const user = result.rows[0];
+
+    if (!user) {
+      return res.status(401).json({
+        error: "YOU NEED TO REGISTER FIRST"
+      });
+    }
+
+    const match = await bcrypt.compare(password, user.password);
+
+    if (!match) {
+      return res.status(401).json({
+        error: "INVALID USERNAME OR PASSWORD"
+      });
+    }
+
+    req.session.userId = user.id;
+
+    res.json({
+      success: true
+    });
+
+  } catch (err) {
+    console.error("LOGIN ERROR:", err);
+
+    res.status(500).json({
+      error: "Something went wrong while logging in"
+    });
   }
-
-  const match = await bcrypt.compare(password, user.password);
-  if (!match) {
-    return res.status(401).json({ error: "INVALID USERNAME OR PASSWORD" });
-  }
-
-  req.session.userId = user.id;
-  res.json({ success: true });
 });
+
+
+// =========================
+// REGISTER
+// =========================
 
 router.post("/register", express.json(), async (req, res) => {
-  const { name, username, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-
   try {
-    const result = db.prepare("INSERT INTO users (name, username, password) VALUES (?, ?, ?)")
-      .run(name, username, hashedPassword);
+    const { name, username, password } = req.body;
 
-    const newUserId = result.lastInsertRowid;
-    db.prepare("INSERT INTO wallet (user_id, balance) VALUES (?, ?)").run(newUserId, 500);
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const result = await db.execute({
+      sql: `
+        INSERT INTO users (name, username, password)
+        VALUES (?, ?, ?)
+      `,
+      args: [name, username, hashedPassword]
+    });
+
+    const newUserId = Number(result.lastInsertRowid);
+
+    await db.execute({
+      sql: `
+        INSERT INTO wallet (user_id, balance)
+        VALUES (?, ?)
+      `,
+      args: [newUserId, 500]
+    });
+
     req.session.userId = newUserId;
-    res.json({ success: true });
+
+    res.json({
+      success: true
+    });
+
   } catch (err) {
-    res.status(400).json({ error: "Username already taken" });
+    console.error("REGISTER ERROR:", err);
+
+    res.status(400).json({
+      error: "Username already taken"
+    });
   }
 });
 
 
-    router.post("/logout", (req, res) => {
-      req.session.destroy(() => {
-        res.json({ success: true });
+// =========================
+// LOGOUT
+// =========================
+
+router.post("/logout", (req, res) => {
+  req.session.destroy((err) => {
+
+    if (err) {
+      console.error("LOGOUT ERROR:", err);
+
+      return res.status(500).json({
+        error: "Failed to logout"
       });
+    }
+
+    res.json({
+      success: true
     });
+
+  });
+});
+
 
 module.exports = router;
