@@ -32,9 +32,13 @@ app.use("/profile", profileRoutes);
 app.use(express.static(__dirname));
 
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/home.html");
+  res.sendFile(__dirname + "/index.html");
 });
 
+
+app.get("/home", (req, res) => {
+  res.sendFile(__dirname + "/home.html");
+});
 app.get("/addtask", (req, res) => {
   res.sendFile(__dirname + "/addtask.html");
 });
