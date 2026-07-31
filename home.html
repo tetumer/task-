@@ -132,6 +132,15 @@
         <h1>Your Tasks</h1>
         <div class="walletPill">💰 <span id="walletBalance">0</span></div>
       </div>
+      <div id="slackInfo" style="
+        background: var(--bg-soft);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 16px;
+        margin-bottom: 20px;
+      ">
+        Loading productivity...
+      </div>
 
       <table id="task_table">
         <tr><th>Title</th><th>Category</th><th>Difficulty</th><th>Status</th><th>Points</th><th></th></tr>
@@ -223,6 +232,43 @@
             window.location.reload();
           });
       }
+
+
+      fetch("/slack")
+  .then(response => response.json())
+  .then(data => {
+    if (data.error) return;
+
+    const hours = Math.floor(data.slackMinutes / 60);
+    const minutes = data.slackMinutes % 60;
+
+    const timeText =
+      hours > 0
+        ? `${hours}h ${minutes}m`
+        : `${minutes}m`;
+
+    const box = document.getElementById("slackInfo");
+
+    if (data.potentialPenalty > 0) {
+      box.innerHTML = `
+        ⚠️ <strong>Slack Time</strong><br>
+        You currently have <strong>${timeText}</strong>
+        of unused productivity time.<br>
+        Potential penalty:
+        <strong>−${data.potentialPenalty} points</strong>
+      `;
+    } else {
+      box.innerHTML = `
+        ✅ <strong>No Slack Penalty</strong><br>
+        Your planned tasks are using your available
+        productivity time.
+      `;
+    }
+  })
+  .catch(err => {
+    console.error("Slack error:", err);
+  });
+  
     </script>
   </body>
 </html>

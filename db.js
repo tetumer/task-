@@ -99,6 +99,14 @@ async function initDb() {
       created_at TEXT NOT NULL
     )
   `);
+  await db.execute(`
+  CREATE TABLE IF NOT EXISTS slack_days (
+    user_id INTEGER NOT NULL,
+    date TEXT NOT NULL,
+    penalty INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (user_id, date)
+  )
+`);
 
   await db.execute(`
     CREATE TABLE IF NOT EXISTS entertainment_history (
